@@ -77,7 +77,7 @@ CREATE TABLE CLIENTES(
 
     Puntos int not null default 0
 
-        constraint CK_Clientes_Puntos_MayorCero CHECK (Puntos > 0),
+        constraint CK_Clientes_Puntos_MayorCero CHECK (Puntos >= 0),
 
     FechaCuenta date not null
 
