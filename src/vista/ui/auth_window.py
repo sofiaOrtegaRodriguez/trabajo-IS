@@ -1,8 +1,8 @@
 import os
 import sys
 
-from PyQt5.QtCore import pyqtSignal
-from PyQt5.QtWidgets import QApplication, QHBoxLayout, QStackedLayout, QWidget
+from PyQt5.QtCore import Qt, pyqtSignal
+from PyQt5.QtWidgets import QApplication, QDialog, QFrame, QHBoxLayout, QLabel, QPushButton, QStackedLayout, QVBoxLayout, QWidget
 
 if __package__ is None or __package__ == "":
     _ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
@@ -12,6 +12,76 @@ if __package__ is None or __package__ == "":
 from src.vista.ui.auth_common import BrandPanel, C_BACKGROUND, C_CREAM
 from src.vista.ui.login_ui import LoginForm
 from src.vista.ui.register_ui import RegisterForm
+
+
+class AuthPopup(QDialog):
+    def __init__(self, message, parent=None):
+        super().__init__(parent)
+        self.message = message
+        self.setModal(True)
+        self.setWindowFlags(Qt.Dialog | Qt.FramelessWindowHint)
+        self._build()
+
+    def _build(self):
+        self.setStyleSheet("background: transparent;")
+
+        root = QVBoxLayout(self)
+        root.setContentsMargins(0, 0, 0, 0)
+
+        card = QFrame()
+        card.setStyleSheet(
+            """
+            QFrame {
+                background-color: #072D44;
+                border: 2px solid #FC814A;
+                border-radius: 24px;
+            }
+            """
+        )
+
+        layout = QVBoxLayout(card)
+        layout.setContentsMargins(18, 18, 18, 18)
+        layout.setSpacing(14)
+
+        top = QHBoxLayout()
+        top.addStretch()
+
+        close_button = QPushButton("X")
+        close_button.setFixedSize(34, 34)
+        close_button.setCursor(Qt.PointingHandCursor)
+        close_button.setStyleSheet(
+            """
+            QPushButton {
+                background-color: #FC814A;
+                color: white;
+                border: none;
+                border-radius: 17px;
+                font-size: 14px;
+                font-weight: 700;
+            }
+            QPushButton:hover {
+                background-color: #E66E3A;
+            }
+            """
+        )
+        close_button.clicked.connect(self.accept)
+        top.addWidget(close_button)
+
+        label = QLabel(self.message)
+        label.setAlignment(Qt.AlignCenter)
+        label.setWordWrap(True)
+        label.setStyleSheet("color: white; font-size: 16px; font-weight: 700;")
+
+        layout.addLayout(top)
+        layout.addWidget(label)
+        root.addWidget(card)
+        self.setFixedSize(360, 150)
+
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Escape:
+            event.ignore()
+            return
+        super().keyPressEvent(event)
 
 
 class AuthUI(QWidget):
@@ -40,6 +110,7 @@ class AuthUI(QWidget):
 
         self.login_card = LoginForm()
         self.register_card = RegisterForm()
+        self.login_popup = None
 
         self.forms.addWidget(self.login_card)
         self.forms.addWidget(self.register_card)
@@ -85,6 +156,12 @@ class AuthUI(QWidget):
     def show_login_error(self, message):
         self.login_card.show_error(message)
 
+    def show_center_popup(self, message):
+        self.login_popup = AuthPopup(message, self)
+        position = self.rect().center() - self.login_popup.rect().center()
+        self.login_popup.move(self.mapToGlobal(position))
+        self.login_popup.exec_()
+
     def show_register_error(self, message):
         self.register_card.show_error(message)
 
@@ -98,6 +175,13 @@ class AuthUI(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = AuthUI()
+    from src.controlador.ControladorPrincipalNuevo import ControladorPrincipal
+    from src.modelo.Logica import Logica
+    from src.vista.LoginNueva import MiVentana
+
+    window = MiVentana()
+    modelo = Logica()
+    controlador = ControladorPrincipal(window, modelo)
+    window.controlador = controlador
     window.show()
     sys.exit(app.exec_())

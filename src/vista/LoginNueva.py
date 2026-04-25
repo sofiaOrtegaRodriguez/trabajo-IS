@@ -1,12 +1,15 @@
 from PyQt5.QtWidgets import QMessageBox
 
 from src.vista.ui.auth_window import AuthUI
+from src.vista.ui.carta_ui import CartaUI
+from src.controlador.ControladorProductos import ControladorProductos
 
 
 class MiVentana(AuthUI):
     def __init__(self):
         super().__init__()
         self._controlador = None
+        self.carta_window = None
         self.login_requested.connect(self.on_button_click)
         self.register_requested.connect(self.on_register_click)
 
@@ -15,7 +18,7 @@ class MiVentana(AuthUI):
             self.show_login_error("No hay un controlador conectado.")
             return
         try:
-            self._controlador.comprobarLogin(usuario, contrasena)
+            login_ok = self._controlador.comprobarLogin(usuario, contrasena)
         except Exception as exc:
             self.show_login_error("No se pudo conectar con la base de datos.")
             QMessageBox.critical(
@@ -23,14 +26,18 @@ class MiVentana(AuthUI):
                 "Error de conexion",
                 str(exc),
             )
+            return
+
+        if not login_ok:
+            self.show_login_error("Usuario o contrasena incorrectos.")
+            self.show_center_popup("USUARIO O CONTRASENA INCORRECTOS")
+            return
+
+        self._open_carta()
 
     def lanzarAvisoLogin(self):
-        self.show_login_error("Usuario o contraseña incorrectos.")
-        QMessageBox.warning(
-            self,
-            "Inicio de sesión",
-            "No se ha podido iniciar sesión con esas credenciales.",
-        )
+        self.show_login_error("Usuario o contrasena incorrectos.")
+        self.show_center_popup("USUARIO O CONTRASENA INCORRECTOS")
 
     def on_register_click(self, nombre, usuario, contrasena):
         if not self._controlador:
@@ -50,12 +57,13 @@ class MiVentana(AuthUI):
             )
             return
 
-        QMessageBox.information(
-            self,
-            "Registro completado",
-            "Tu cuenta se ha creado correctamente. Ya puedes iniciar sesion.",
-        )
-        self.show_login()
+        self._open_carta()
+
+    def _open_carta(self):
+        controlador_carta = ControladorProductos(self._controlador._modelo)
+        self.carta_window = CartaUI(controlador=controlador_carta)
+        self.carta_window.show()
+        self.close()
 
     @property
     def controlador(self):

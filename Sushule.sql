@@ -92,24 +92,23 @@ CREATE TABLE CLIENTES(
 CREATE TABLE PRODUCTOS(
 
     Nombre nvarchar(100) not null
-
         constraint PK_Productos primary key,
 
     Precio smallmoney not null
-
         constraint CK_Productos_Precio_MayorCero CHECK (Precio > 0),
 
     Ingredientes nvarchar(1000) not null,
 
     Disponible char(1) not null
-
         constraint CK_Productos_Disponible CHECK (Disponible IN ('Y', 'N')),
 
     Stock int not null default (0)
+        constraint CK_Productos_Stock_MayorCero CHECK (Stock >= 0),
 
-        constraint CK_Productos_Stock_MayorCero CHECK (Stock > 0),
-
+    Categoria varchar(20) not null
+        constraint CK_Productos_Categoria CHECK (Categoria IN ('Sushi','Fritos','Postres','Bebidas'))
 );
+
 
 
 

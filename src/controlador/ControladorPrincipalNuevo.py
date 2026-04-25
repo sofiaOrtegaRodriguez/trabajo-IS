@@ -19,12 +19,7 @@ class ControladorPrincipal:
     def comprobarLogin(self, nombre, passw):
         login = LoginVo(nombre, passw)
         resultado = self._modelo.comprobarLogin(login)
-
-        if resultado is None:
-            self._vista.lanzarAvisoLogin()
-            return
-
-        self._vista.close()
+        return resultado is not None
 
     def registrarCliente(self, nombre, correo, contrasena):
         self._modelo.registrarCliente(nombre, correo, contrasena)
