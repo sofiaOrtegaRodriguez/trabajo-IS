@@ -54,3 +54,12 @@ class PedidoVo:
 # Compatibilidad con el código existente
 PedidoHistorico = PedidoVo
 PedidoDetalleHistorico = PedidoDetalleVo
+
+class PedidoTiempoRealVo(PedidoVo): #para añadir al usuario que realiza el pedido
+    def __init__(self, id_pedido, fecha, hora, usuario, estado, productos, total):
+        super().__init__(id_pedido, fecha, hora, estado, productos, total)
+        self.__usuario = usuario
+    
+    @property
+    def usuario(self):
+        return self.__usuario

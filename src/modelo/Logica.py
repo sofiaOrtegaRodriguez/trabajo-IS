@@ -79,6 +79,14 @@ class Logica():
     def listarPedidos(self, sesion):
         pedido_dao = PedidoDaoSQLServer()
         return pedido_dao.listar(sesion)
+    
+    def listarTodosPedidos(self):
+        pedido_dao = PedidoDaoSQLServer()
+        return pedido_dao.listarTiempoReal()
+    
+    def actualizarEstadoPedido(self, pedido):
+        pedido_dao = PedidoDaoSQLServer()
+        return pedido_dao.modificarEstado(pedido)
 
     def sumarPuntosCliente(self, id_cliente, puntos):
         user_dao = UserDaoSQLServer()
