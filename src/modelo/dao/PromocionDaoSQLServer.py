@@ -5,10 +5,13 @@ from src.modelo.vo.PromocionVo import PromocionVo
 
 
 class PromocionDaoSQLServer:
+    def __init__(self):
+        self._conexion = ConexionSQLServer.get_instance()
+
     def listar(self):
         conn = None
         try:
-            conn = ConexionSQLServer.getConnection()
+            conn = self._conexion.get_connection()
             cursor = conn.cursor()
             cursor.execute(
                 """
@@ -30,7 +33,7 @@ class PromocionDaoSQLServer:
     def crear(self, descuento, fecha_inicio, fecha_fin, nombre_producto):
         conn = None
         try:
-            conn = ConexionSQLServer.getConnection()
+            conn = self._conexion.get_connection()
             cursor = conn.cursor()
             cursor.execute(
                 """
@@ -65,7 +68,7 @@ class PromocionDaoSQLServer:
     def eliminar(self, id_promocion):
         conn = None
         try:
-            conn = ConexionSQLServer.getConnection()
+            conn = self._conexion.get_connection()
             cursor = conn.cursor()
             cursor.execute("DELETE FROM PRODPROM WHERE IDProm = ?", (id_promocion,))
             cursor.execute("DELETE FROM PROMOCIONES WHERE IDProm = ?", (id_promocion,))

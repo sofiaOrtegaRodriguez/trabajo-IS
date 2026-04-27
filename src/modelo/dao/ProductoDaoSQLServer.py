@@ -5,13 +5,16 @@ from src.modelo.vo.ProductoVo import ProductoVo
 
 
 class ProductoDaoSQLServer:
+    def __init__(self):
+        self._conexion = ConexionSQLServer.get_instance()
+
     BASE_COLUMNS = ("Nombre", "Precio", "Ingredientes", "Disponible", "Stock")
     CATEGORY_COLUMNS = ("Categorias", "Categoria")
 
     def listar(self):
         conn = None
         try:
-            conn = ConexionSQLServer.getConnection()
+            conn = self._conexion.get_connection()
             cursor = conn.cursor()
             schema = self._get_schema_info(cursor)
 
@@ -51,7 +54,7 @@ class ProductoDaoSQLServer:
     def crear(self, producto_vo):
         conn = None
         try:
-            conn = ConexionSQLServer.getConnection()
+            conn = self._conexion.get_connection()
             cursor = conn.cursor()
             schema = self._get_schema_info(cursor)
 
@@ -91,7 +94,7 @@ class ProductoDaoSQLServer:
     def actualizar(self, nombre_original, producto_vo):
         conn = None
         try:
-            conn = ConexionSQLServer.getConnection()
+            conn = self._conexion.get_connection()
             cursor = conn.cursor()
             schema = self._get_schema_info(cursor)
 
@@ -136,7 +139,7 @@ class ProductoDaoSQLServer:
     def eliminar(self, nombre_producto):
         conn = None
         try:
-            conn = ConexionSQLServer.getConnection()
+            conn = self._conexion.get_connection()
             cursor = conn.cursor()
             cursor.execute("DELETE FROM PRODUCTOS WHERE [Nombre] = ?", (nombre_producto,))
             conn.commit()
@@ -154,7 +157,7 @@ class ProductoDaoSQLServer:
     def describir(self):
         conn = None
         try:
-            conn = ConexionSQLServer.getConnection()
+            conn = self._conexion.get_connection()
             cursor = conn.cursor()
             return self._get_schema_info(cursor)
         except Exception as exc:

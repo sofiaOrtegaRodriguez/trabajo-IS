@@ -158,9 +158,9 @@ class RegisterForm(QWidget):
 
         root.addWidget(card)
 
-        self.submit_button.clicked.connect(self.submitted)
-        self.confirm_input.returnPressed.connect(self.submitted)
-        self.switch_button.clicked.connect(self.switch_requested)
+        self.submit_button.clicked.connect(self.submitted.emit)
+        self.confirm_input.returnPressed.connect(self.submitted.emit)
+        self.switch_button.clicked.connect(self.switch_requested.emit)
 
     def show_error(self, message):
         self.error_label.setText(message)

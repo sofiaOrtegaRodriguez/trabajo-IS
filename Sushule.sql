@@ -140,7 +140,7 @@ CREATE TABLE PEDIDOS(
 
 	PrecioTotal float not null,
 
-	Hora date not null,
+	Hora datetime2(0) not null,
 
 	Estado varchar(20) not null default 'PENDIENTE'
 

@@ -90,11 +90,15 @@ class ProductCard(QFrame):
     add_clicked = pyqtSignal(str, int)
     remove_clicked = pyqtSignal(str)
 
-    def __init__(self, product, pixmap, has_image, parent=None):
+    def __init__(self, product, pixmap, has_image, quantity=0, parent=None):
         super().__init__(parent)
         self.product = product
         self.pixmap = pixmap
         self.has_image = has_image
+        self.quantity = max(0, int(quantity))
+        self.minus_button = None
+        self.plus_button = None
+        self.quantity_label = None
         self._build()
 
     def _build(self):
@@ -166,13 +170,20 @@ class ProductCard(QFrame):
         buttons.setSpacing(12)
         buttons.addStretch()
 
-        minus_button = self._action_button("-")
-        plus_button = self._action_button("+")
-        minus_button.clicked.connect(lambda: self.remove_clicked.emit(self.product["id"]))
-        plus_button.clicked.connect(lambda: self.add_clicked.emit(self.product["id"], 1))
+        self.minus_button = self._action_button("-")
+        self.plus_button = self._action_button("+")
+        self.quantity_label = QLabel(str(self.quantity))
+        self.quantity_label.setAlignment(Qt.AlignCenter)
+        self.quantity_label.setMinimumWidth(28)
+        self.quantity_label.setStyleSheet(
+            f"color: {C_WHITE}; font-family: Arial; font-size: 14px; font-weight: 700;"
+        )
+        self.minus_button.clicked.connect(lambda: self.remove_clicked.emit(self.product["id"]))
+        self.plus_button.clicked.connect(lambda: self.add_clicked.emit(self.product["id"], 1))
 
-        buttons.addWidget(minus_button)
-        buttons.addWidget(plus_button)
+        buttons.addWidget(self.minus_button)
+        buttons.addWidget(self.quantity_label)
+        buttons.addWidget(self.plus_button)
         buttons.addStretch()
 
         info_layout.addWidget(name_label)
@@ -182,6 +193,7 @@ class ProductCard(QFrame):
 
         layout.addWidget(image_label, 1)
         layout.addWidget(info_block, 0)
+        self._update_quantity_state()
 
     def _action_button(self, text):
         button = QPushButton(text)
@@ -205,6 +217,18 @@ class ProductCard(QFrame):
         )
         return button
 
+    def set_quantity(self, quantity):
+        self.quantity = max(0, int(quantity))
+        if self.quantity_label is not None:
+            self.quantity_label.setText(str(self.quantity))
+        self._update_quantity_state()
+
+    def _update_quantity_state(self):
+        if self.minus_button is None:
+            return
+        self.minus_button.setEnabled(self.quantity > 0)
+        self.minus_button.setToolTip("Quitar una unidad" if self.quantity > 0 else "No hay unidades para quitar")
+
 
 class CartaUI(QWidget):
     add_product = pyqtSignal(str, int)
@@ -212,9 +236,10 @@ class CartaUI(QWidget):
     profile_clicked = pyqtSignal()
     cart_clicked = pyqtSignal()
 
-    def __init__(self, controlador=None, parent=None):
+    def __init__(self, controlador=None, quantity_provider=None, parent=None):
         super().__init__(parent)
         self.controlador = controlador
+        self.quantity_provider = quantity_provider
         self.current_category = "sushi"
         self.current_page = 0
         self.products_per_page = 4
@@ -227,6 +252,7 @@ class CartaUI(QWidget):
         self.page_info = None
         self.prev_button = None
         self.next_button = None
+        self.product_cards = {}
         self._load_data()
         self._build()
         self._load_products(self.current_category)
@@ -440,6 +466,7 @@ class CartaUI(QWidget):
         self._refresh_products()
 
     def _refresh_products(self):
+        self.product_cards = {}
         while self.product_grid.count():
             item = self.product_grid.takeAt(0)
             widget = item.widget()
@@ -457,13 +484,29 @@ class CartaUI(QWidget):
                 product,
                 self.product_pixmaps[product["id"]],
                 self.image_presence.get(product["id"], False),
+                quantity=self._get_product_quantity(product["id"]),
             )
             card.add_clicked.connect(lambda product_id, amount: self.add_product.emit(product_id, amount))
             card.remove_clicked.connect(lambda product_id: self.remove_product.emit(product_id))
             self.product_grid.addWidget(card, row, col)
+            self.product_cards[product["id"]] = card
 
         total_pages = max(1, (len(self.products) + self.products_per_page - 1) // self.products_per_page)
         self.page_info.setText(f"Pagina {self.current_page + 1} / {total_pages}")
+
+    def update_product_quantity(self, product_id, quantity):
+        card = self.product_cards.get(product_id)
+        if card is not None:
+            card.set_quantity(quantity)
+
+    def sync_cart_quantities(self, quantities):
+        for product_id, card in self.product_cards.items():
+            card.set_quantity(quantities.get(product_id, 0))
+
+    def _get_product_quantity(self, product_id):
+        if callable(self.quantity_provider):
+            return self.quantity_provider(product_id)
+        return 0
 
     def _on_category_clicked(self, categoria):
         if categoria == self.current_category:

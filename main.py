@@ -1,17 +1,30 @@
+import os
+import sys
+
 from PyQt5.QtWidgets import QApplication
 
-from src.vista.LoginNueva import MiVentana
-from src.modelo.Logica import Logica
-from src.controlador.ControladorPrincipalNuevo import ControladorPrincipal
 
-if __name__ == "__main__":
-    app = QApplication([])
-    ventana = MiVentana()
+ROOT = os.path.dirname(os.path.abspath(__file__))
+if ROOT not in sys.path:
+    sys.path.insert(0, ROOT)
+
+from src.controlador.ControladorPrincipalNuevo import ControladorPrincipal
+from src.modelo.Logica import Logica
+from src.vista.VentanaPrincipal import VentanaPrincipal
+
+
+def main():
+    app = QApplication(sys.argv)
+
     modelo = Logica()
+    ventana = VentanaPrincipal()
     controlador = ControladorPrincipal(ventana, modelo)
 
-    ventana.controlador = controlador
-    controlador.ventanaIniciarSesión()
+    ventana.set_controlador(controlador)
+    ventana.show()
 
-    app.exec_()
+    sys.exit(app.exec_())
 
+
+if __name__ == "__main__":
+    main()

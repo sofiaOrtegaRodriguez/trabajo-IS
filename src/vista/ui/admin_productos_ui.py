@@ -1,7 +1,7 @@
 import os
 import sys
 
-from PyQt5.QtCore import QDate, Qt
+from PyQt5.QtCore import QDate, Qt, pyqtSignal
 from PyQt5.QtWidgets import (
     QApplication,
     QComboBox,
@@ -38,8 +38,11 @@ ADMIN_CATEGORIES = ["Sushi", "Fritos", "Postres", "Bebidas"]
 
 
 class AdminProductosUI(QWidget):
+    volver_menu = pyqtSignal()
+
     def __init__(self, controlador=None, parent=None):
         super().__init__(parent)
+        self.setAttribute(Qt.WA_DeleteOnClose, True)
         self.controlador = controlador
         self.schema_info = {"category_column": None}
         self.editing_name = None
@@ -75,6 +78,14 @@ class AdminProductosUI(QWidget):
         left_layout = QVBoxLayout(left_card)
         left_layout.setContentsMargins(24, 24, 24, 24)
         left_layout.setSpacing(18)
+
+        back_row = QHBoxLayout()
+        back_button = self._build_action_button("Volver", secondary=True)
+        back_button.setMaximumWidth(130)
+        back_button.clicked.connect(self._go_back)
+        back_row.addWidget(back_button)
+        back_row.addStretch()
+        left_layout.addLayout(back_row)
 
         title = QLabel("Gestion de productos")
         title.setStyleSheet("color: white; font-size: 24px; font-weight: 700;")
@@ -367,6 +378,10 @@ class AdminProductosUI(QWidget):
         layout.addWidget(self.empty_promotion_label, 1)
         layout.addWidget(self.promotion_table, 1)
         return card
+
+    def _go_back(self, checked=False):
+        self.volver_menu.emit()
+        self.close()
 
     def _build_action_button(self, text, secondary=False):
         button = QPushButton(text)
