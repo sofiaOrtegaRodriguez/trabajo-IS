@@ -82,17 +82,7 @@ class VentanaPrincipal(QMainWindow):
             self.auth_ui.show_login_error("Usuario o contrasena incorrectos.")
             return
 
-        self._cliente_actual = sesion
-        if sesion.es_gerente:
-            self._servicio_cesta.set_session(None)
-            self.mostrar_gerente_dashboard()
-            return
-        if sesion.es_administrador:
-            self._servicio_cesta.set_session(None)
-            self.mostrar_admin_dashboard()
-            return
-        self._servicio_cesta.set_session(self._cliente_actual)
-        self.mostrar_carta()
+        self._route_session(sesion)
 
     def _handle_register(self, nombre, correo, contrasena):
         if self._controlador is None:
@@ -100,7 +90,7 @@ class VentanaPrincipal(QMainWindow):
             return
 
         try:
-            self._controlador.registrarCliente(nombre, correo, contrasena)
+            sesion = self._controlador.registrar_cliente(nombre, correo, contrasena)
         except ValueError as exc:
             self.auth_ui.show_register_error(str(exc))
             return
@@ -109,12 +99,13 @@ class VentanaPrincipal(QMainWindow):
             QMessageBox.critical(self, "Error de registro", str(exc))
             return
 
-        try:
-            sesion = self._controlador.comprobarLogin(correo, contrasena)
-        except Exception as exc:
+        if not sesion:
             self.auth_ui.show_register_error("No se pudo autenticar la nueva cuenta.")
-            QMessageBox.critical(self, "Error de autenticacion", str(exc))
             return
+
+        self._route_session(sesion)
+
+    def _route_session(self, sesion):
         self._cliente_actual = sesion
         if sesion.es_gerente:
             self._servicio_cesta.set_session(None)

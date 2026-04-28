@@ -105,8 +105,8 @@ CREATE TABLE PRODUCTOS(
     Stock int not null default (0)
         constraint CK_Productos_Stock_MayorCero CHECK (Stock >= 0),
 
-    Categoria varchar(20) not null
-        constraint CK_Productos_Categoria CHECK (Categoria IN ('Sushi','Fritos','Postres','Bebidas'))
+    Categorias varchar(20) not null
+        constraint CK_Productos_Categorias CHECK (Categorias IN ('Sushi','Fritos','Postres','Bebidas'))
 );
 
 

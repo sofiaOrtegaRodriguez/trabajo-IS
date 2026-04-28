@@ -1,6 +1,5 @@
 from PyQt5.QtWidgets import QMessageBox
 
-from src.controlador.ControladorEmpleados import ControladorEmpleados
 from src.vista.ui.auth_window import AuthUI
 from src.vista.ui.gerente_dashboard_ui import GerenteDashboardUI
 from src.vista.ui.admin_dashboard_ui import AdminDashboardUI
@@ -10,6 +9,7 @@ from src.vista.ui.carta_ui import CartaUI
 from src.vista.ui.cesta_ui import CestaUI
 from src.vista.ui.historial_ui import HistorialUI
 from src.controlador.ControladorProductos import ControladorProductos
+from src.controlador.ControladorEmpleados import ControladorEmpleados
 from src.modelo.ServicioCesta import ServicioCesta
 
 
@@ -34,14 +34,10 @@ class MiVentana(AuthUI):
             self.show_login_error("No hay un controlador conectado.")
             return
         try:
-            sesion = self._controlador.comprobarLogin(usuario, contrasena)
+            sesion = self._controlador.autenticar_usuario(usuario, contrasena)
         except Exception as exc:
             self.show_login_error("No se pudo conectar con la base de datos.")
-            QMessageBox.critical(
-                self,
-                "Error de conexion",
-                str(exc),
-            )
+            QMessageBox.critical(self, "Error de conexion", str(exc))
             return
 
         if not sesion:
@@ -49,18 +45,7 @@ class MiVentana(AuthUI):
             self.show_center_popup("USUARIO O CONTRASENA INCORRECTOS")
             return
 
-        self._cliente_actual = sesion
-        if sesion.es_gerente:
-            self._servicio_cesta.set_session(None)
-            self._open_gerente_dashboard()
-            return
-        if sesion.es_administrador:
-            self._servicio_cesta.set_session(None)
-            self._open_admin_dashboard()
-            return
-
-        self._servicio_cesta.set_session(self._cliente_actual)
-        self._open_carta()
+        self._route_session(sesion)
 
     def lanzarAvisoLogin(self):
         self.show_login_error("Usuario o contrasena incorrectos.")
@@ -71,28 +56,22 @@ class MiVentana(AuthUI):
             self.show_register_error("No hay un controlador conectado.")
             return
         try:
-            self._controlador.registrarCliente(nombre, usuario, contrasena)
+            sesion = self._controlador.registrar_cliente(nombre, usuario, contrasena)
         except ValueError as exc:
             self.show_register_error(str(exc))
             return
         except Exception as exc:
             self.show_register_error("No se pudo registrar en la base de datos.")
-            QMessageBox.critical(
-                self,
-                "Error de registro",
-                str(exc),
-            )
+            QMessageBox.critical(self, "Error de registro", str(exc))
             return
 
-        try:
-            sesion = self._controlador.comprobarLogin(usuario, contrasena)
-        except Exception as exc:
-            QMessageBox.critical(
-                self,
-                "Error de autenticacion",
-                str(exc),
-            )
+        if not sesion:
+            self.show_register_error("No se pudo autenticar la nueva cuenta.")
             return
+
+        self._route_session(sesion)
+
+    def _route_session(self, sesion):
         self._cliente_actual = sesion
         if sesion.es_gerente:
             self._servicio_cesta.set_session(None)
@@ -102,6 +81,7 @@ class MiVentana(AuthUI):
             self._servicio_cesta.set_session(None)
             self._open_admin_dashboard()
             return
+
         self._servicio_cesta.set_session(self._cliente_actual)
         self._open_carta()
 
@@ -158,11 +138,7 @@ class MiVentana(AuthUI):
                 quantity_provider=self._servicio_cesta.cantidad_producto,
             )
         except Exception as exc:
-            QMessageBox.critical(
-                self,
-                "Error al cargar la carta",
-                str(exc),
-            )
+            QMessageBox.critical(self, "Error al cargar la carta", str(exc))
             return
         self.carta_window.add_product.connect(self._add_to_cart)
         self.carta_window.remove_product.connect(self._remove_from_cart)
@@ -192,11 +168,7 @@ class MiVentana(AuthUI):
         try:
             self.cesta_window = CestaUI(servicio=self._servicio_cesta)
         except Exception as exc:
-            QMessageBox.critical(
-                self,
-                "Error al abrir la cesta",
-                str(exc),
-            )
+            QMessageBox.critical(self, "Error al abrir la cesta", str(exc))
             return
 
         self.cesta_window.volver_carta.connect(self._open_carta)
@@ -213,11 +185,7 @@ class MiVentana(AuthUI):
             pedidos = self._servicio_cesta.obtener_historial()
             self.historial_window = HistorialUI(cliente=self._cliente_actual, pedidos=pedidos)
         except Exception as exc:
-            QMessageBox.critical(
-                self,
-                "Error al abrir el historial",
-                str(exc),
-            )
+            QMessageBox.critical(self, "Error al abrir el historial", str(exc))
             return
 
         self.historial_window.volver_menu.connect(self._open_carta)

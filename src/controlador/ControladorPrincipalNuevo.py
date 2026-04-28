@@ -17,15 +17,21 @@ class ControladorPrincipal:
             return self.ventanaIniciarSesion
         raise AttributeError(name)
 
-    def comprobarLogin(self, nombre, passw):
+    def autenticar_usuario(self, nombre, passw):
         login = LoginVo(nombre, passw)
         resultado = self._modelo.comprobarLogin(login)
         self._sesion_actual = resultado if resultado is not None else None
         return resultado
 
-    def registrarCliente(self, nombre, correo, contrasena):
+    def registrar_cliente(self, nombre, correo, contrasena):
         self._modelo.registrarCliente(nombre, correo, contrasena)
-        self._sesion_actual = None
+        return self.autenticar_usuario(correo, contrasena)
+
+    def comprobarLogin(self, nombre, passw):
+        return self.autenticar_usuario(nombre, passw)
+
+    def registrarCliente(self, nombre, correo, contrasena):
+        return self.registrar_cliente(nombre, correo, contrasena)
 
     def get_modelo(self):
         return self._modelo
