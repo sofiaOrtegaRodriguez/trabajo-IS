@@ -1,16 +1,12 @@
 from src.modelo.conexion.ConexionSQLServer import ConexionSQLServer
+from src.modelo.dao.PromocionDao import PromocionDao
 from src.modelo.vo.PromocionVo import PromocionVo
 
 
-class PromocionDaoSQLServer:
-    def __init__(self):
-        self._conexion = ConexionSQLServer.get_instance()
-
+class PromocionDaoJDBC(PromocionDao, ConexionSQLServer):
     def listar(self):
-        conn = None
+        cursor = self.getCursor()
         try:
-            conn = self._conexion.get_connection()
-            cursor = conn.cursor()
             cursor.execute(
                 """
                 SELECT p.IDProm, p.Descuento, p.FechaInicio, p.FechaFin, pp.NombreProd
@@ -26,13 +22,13 @@ class PromocionDaoSQLServer:
         except Exception as exc:
             raise RuntimeError(f"No se pudieron cargar las promociones: {exc}") from exc
         finally:
-            ConexionSQLServer.close(conn)
+            if cursor is not None:
+                cursor.close()
+            self.closeConnection()
 
     def crear(self, descuento, fecha_inicio, fecha_fin, nombre_producto):
-        conn = None
+        cursor = self.getCursor()
         try:
-            conn = self._conexion.get_connection()
-            cursor = conn.cursor()
             cursor.execute(
                 """
                 INSERT INTO PROMOCIONES (Descuento, FechaInicio, FechaFin)
@@ -43,49 +39,35 @@ class PromocionDaoSQLServer:
             )
             row = cursor.fetchone()
             id_promocion = int(row[0])
-            cursor.execute(
-                """
-                INSERT INTO PRODPROM (NombreProd, IDProm)
-                VALUES (?, ?)
-                """,
-                (nombre_producto, id_promocion),
-            )
-            conn.commit()
+            cursor.execute("INSERT INTO PRODPROM (NombreProd, IDProm) VALUES (?, ?)", (nombre_producto, id_promocion))
+            self.conexion.commit()
             return id_promocion
         except Exception as exc:
-            if conn is not None:
-                conn.rollback()
+            if self.conexion is not None:
+                self.conexion.rollback()
             if self._is_constraint_error(exc):
                 raise ValueError("No se pudo crear la promocion. Revisa las fechas, el descuento o el producto elegido.") from exc
             raise RuntimeError(f"No se pudo crear la promocion: {exc}") from exc
         finally:
-            ConexionSQLServer.close(conn)
+            if cursor is not None:
+                cursor.close()
+            self.closeConnection()
 
     def eliminar(self, id_promocion):
-        conn = None
+        cursor = self.getCursor()
         try:
-            conn = self._conexion.get_connection()
-            cursor = conn.cursor()
             cursor.execute("DELETE FROM PRODPROM WHERE IDProm = ?", (id_promocion,))
             cursor.execute("DELETE FROM PROMOCIONES WHERE IDProm = ?", (id_promocion,))
-            conn.commit()
-        except Exception:
-            if conn is not None:
-                conn.rollback()
-            raise
+            self.conexion.commit()
+        except Exception as exc:
+            if self.conexion is not None:
+                self.conexion.rollback()
+            raise RuntimeError(f"No se pudo eliminar la promocion: {exc}") from exc
         finally:
-            ConexionSQLServer.close(conn)
+            if cursor is not None:
+                cursor.close()
+            self.closeConnection()
 
     def _is_constraint_error(self, exc):
         text = str(exc).lower()
-        return any(
-            token in text
-            for token in (
-                "duplicate",
-                "unique",
-                "constraint",
-                "violation",
-                "integrity",
-                "sqlstate=23000",
-            )
-        )
+        return any(token in text for token in ("duplicate", "unique", "constraint", "violation", "integrity", "sqlstate=23000"))

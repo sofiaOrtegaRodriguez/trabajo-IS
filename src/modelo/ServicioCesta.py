@@ -1,5 +1,5 @@
-from src.modelo.dao.PedidoDaoSQLServer import PedidoDaoSQLServer
-from src.modelo.dao.UserDaoSQLServer import UserDaoSQLServer
+from src.modelo.dao.PedidoDaoJDBC import PedidoDaoJDBC
+from src.modelo.dao.UserDaoJDBC import UserDaoJDBC
 
 
 class ServicioCesta:
@@ -107,16 +107,16 @@ class ServicioCesta:
             raise ValueError("No hay una sesión activa.")
 
         total = self.calcular_total()
-        pedido_dao = PedidoDaoSQLServer()
+        pedido_dao = PedidoDaoJDBC()
         pedido_id = pedido_dao.crear(self._sesion, self.obtener_items(), total)
 
         puntos_ganados = 0
         if self.permite_puntos:
             if self._puntos_usados:
-                UserDaoSQLServer().actualizarPuntos(self._sesion.id_sesion, -self._puntos_usados)
+                UserDaoJDBC().actualizarPuntos(self._sesion.id_sesion, -self._puntos_usados)
             puntos_ganados = int(round(total * 10))
             if puntos_ganados > 0:
-                UserDaoSQLServer().actualizarPuntos(self._sesion.id_sesion, puntos_ganados)
+                UserDaoJDBC().actualizarPuntos(self._sesion.id_sesion, puntos_ganados)
                 if hasattr(self._sesion, "sumar_puntos"):
                     self._sesion.sumar_puntos(puntos_ganados)
 
@@ -132,7 +132,7 @@ class ServicioCesta:
     def snapshot_history(self):
         if self._sesion is None:
             return []
-        return PedidoDaoSQLServer().listar(self._sesion)
+        return PedidoDaoJDBC().listar(self._sesion)
 
     def obtener_historial(self):
         return self.snapshot_history()
