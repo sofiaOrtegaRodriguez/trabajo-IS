@@ -1,9 +1,11 @@
 import os
 from pathlib import Path
+import traceback
 
 try:
     import jaydebeapi
 except ModuleNotFoundError as exc:  # pragma: no cover - runtime dependency only
+    print("Error: No se pudo importar jaydebeapi. Asegúrate de tener la dependencia JDBC para Python instalada.")
     jaydebeapi = None
     _JDBC_IMPORT_ERROR = exc
 else:
@@ -72,14 +74,14 @@ class ConexionSQLServer:
     """
 
     _instance = None
-    host = os.getenv("SUSHULE_DB_SERVER", r".\SQLEXPRESS")
+    host = os.getenv("SUSHULE_DB_SERVER", r"127.0.0.1")
     database = os.getenv("SUSHULE_DB_NAME", "SushUle")
-    user = os.getenv("SUSHULE_DB_USER", "")
-    password = os.getenv("SUSHULE_DB_PASSWORD", "")
+    user = os.getenv("SUSHULE_DB_USER", "app_user")
+    password = os.getenv("SUSHULE_DB_PASSWORD", "Admin123")
     jdbc_driver = os.getenv("SUSHULE_JDBC_DRIVER", "com.microsoft.sqlserver.jdbc.SQLServerDriver")
     jar_file = os.getenv(
         "SUSHULE_JDBC_JAR",
-        str(Path(__file__).resolve().parents[3] / "lib" / "mssql-jdbc-12.6.1.jre11.jar"),
+        str(Path(__file__).resolve().parents[3] / "lib" / "mssql-jdbc-13.4.0.jre8.jar"),
     )
     encrypt = os.getenv("SUSHULE_JDBC_ENCRYPT", "true")
     trust_server_certificate = os.getenv("SUSHULE_JDBC_TRUST_CERT", "true")
@@ -90,6 +92,7 @@ class ConexionSQLServer:
         "y",
         "si",
     }
+
 
     def __new__(cls, *args, **kwargs):
         if cls._instance is None:
@@ -112,6 +115,7 @@ class ConexionSQLServer:
 
     def createConnection(self):
         try:
+            print(f"Intentando conectar a {self._host}...")
             if jaydebeapi is None:
                 raise RuntimeError(
                     "No se pudo importar jaydebeapi. Instala la dependencia JDBC para Python."
@@ -123,10 +127,10 @@ class ConexionSQLServer:
                 )
 
             jdbc_url = (
-                f"jdbc:sqlserver://{self._host};"
+                f"jdbc:sqlserver://{self._host}:1433;"
                 f"databaseName={self._database};"
                 f"encrypt={self.encrypt};"
-                f"trustServerCertificate={self.trust_server_certificate}"
+                f"trustServerCertificate={self.trust_server_certificate};"
             )
             if self.integrated_security and not self._user and not self._password:
                 jdbc_url += ";integratedSecurity=true"
@@ -138,6 +142,7 @@ class ConexionSQLServer:
                 credentials,
                 self.jar_file,
             )
+            print("¡Conexión establecida con éxito!") # <-- DEBUG
             return raw_connection
         except Exception as exc:
             print("Error creando conexión:", exc)

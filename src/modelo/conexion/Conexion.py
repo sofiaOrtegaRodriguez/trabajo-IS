@@ -11,7 +11,7 @@ class Conexion:
     def createConnection(self):
         try:
             jdbc_driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver"
-            jar_file = "lib/mssql-jdbc-12.6.1.jre11.jar"
+            jar_file = "lib/mssql-jdbc-13.4.0.jre8.jar"
             self.conexion = jaydebeapi.connect(
                 jdbc_driver,
                 f"jdbc:sqlserver://{self._host};databaseName={self._database};integratedSecurity=true;encrypt=true;trustServerCertificate=true",
