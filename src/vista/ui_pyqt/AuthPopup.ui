@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AuthPopup</class>
+ <widget class="QDialog" name="AuthPopup">
+  <property name="windowFlags">
+   <set>Qt::Dialog|Qt::FramelessWindowHint</set>
+  </property>
+  <property name="styleSheet">
+   <string>QDialog#AuthPopup { background: transparent; }</string>
+  </property>
+  <layout class="QVBoxLayout" name="rootLayout">
+   <property name="leftMargin"><number>0</number></property>
+   <property name="topMargin"><number>0</number></property>
+   <property name="rightMargin"><number>0</number></property>
+   <property name="bottomMargin"><number>0</number></property>
+   <item>
+    <widget class="QFrame" name="card">
+     <property name="styleSheet"><string>QFrame#card { background-color: #072D44; border: 2px solid #FC814A; border-radius: 24px; }</string></property>
+     <layout class="QVBoxLayout" name="cardLayout">
+      <property name="leftMargin"><number>18</number></property>
+      <property name="topMargin"><number>18</number></property>
+      <property name="rightMargin"><number>18</number></property>
+      <property name="bottomMargin"><number>18</number></property>
+      <property name="spacing"><number>14</number></property>
+      <item>
+       <layout class="QHBoxLayout" name="topRow">
+        <item><spacer name="leftSpacer"><property name="orientation"><enum>Qt::Horizontal</enum></property></spacer></item>
+        <item>
+         <widget class="QPushButton" name="close_button">
+          <property name="minimumSize"><size><width>34</width><height>34</height></size></property>
+          <property name="maximumSize"><size><width>34</width><height>34</height></size></property>
+          <property name="cursor"><cursorShape>PointingHandCursor</cursorShape></property>
+          <property name="styleSheet"><string>QPushButton { background-color:#FC814A; color:white; border:none; border-radius:17px; font-size:14px; font-weight:700; } QPushButton:hover { background-color:#E66E3A; }</string></property>
+          <property name="text"><string>X</string></property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QLabel" name="message_label">
+        <property name="alignment"><set>Qt::AlignCenter</set></property>
+        <property name="wordWrap"><bool>true</bool></property>
+        <property name="styleSheet"><string>color:white;font-size:16px;font-weight:700;</string></property>
+        <property name="text"><string></string></property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+</ui>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>GerenteDashboardUI</class>
+ <widget class="QWidget" name="GerenteDashboardUI">
+  <property name="geometry">
+   <rect><x>0</x><y>0</y><width>1280</width><height>820</height></rect>
+  </property>
+  <property name="styleSheet">
+   <string>QWidget#GerenteDashboardUI { background-color: #147DB2; } QFrame#card { background-color: #072D44; border-radius: 34px; } QFrame#lightcard { background-color: #FEF5ED; border-radius: 28px; } QLabel { background: transparent; }</string>
+  </property>
+  <layout class="QVBoxLayout" name="mainLayout">
+   <property name="leftMargin"><number>24</number></property>
+   <property name="topMargin"><number>24</number></property>
+   <property name="rightMargin"><number>24</number></property>
+   <property name="bottomMargin"><number>24</number></property>
+   <property name="spacing"><number>18</number></property>
+   <item>
+    <widget class="QFrame" name="header">
+     <property name="styleSheet"><string>QFrame#header { background-color: #072D44; border-radius: 34px; }</string></property>
+     <layout class="QVBoxLayout" name="headerLayout">
+      <property name="leftMargin"><number>26</number></property>
+      <property name="topMargin"><number>24</number></property>
+      <property name="rightMargin"><number>26</number></property>
+      <property name="bottomMargin"><number>24</number></property>
+      <property name="spacing"><number>10</number></property>
+      <item>
+       <layout class="QHBoxLayout" name="topRow">
+        <item><widget class="QLabel" name="title"><property name="styleSheet"><string>color:white;font-size:22px;font-weight:800;</string></property><property name="text"><string>Dashboard de gerente</string></property></widget></item>
+        <item><spacer name="topSpacer"><property name="orientation"><enum>Qt::Horizontal</enum></property></spacer></item>
+        <item><widget class="QPushButton" name="logout_button"><property name="cursor"><cursorShape>PointingHandCursor</cursorShape></property><property name="styleSheet"><string>QPushButton{background-color:#FC814A;color:white;border:none;border-radius:18px;font-size:12px;font-weight:700;padding:8px 14px;}QPushButton:hover{background-color:#E66E3A;}</string></property><property name="text"><string>Cerrar sesion</string></property></widget></item>
+       </layout>
+      </item>
+      <item><widget class="QLabel" name="greeting"><property name="styleSheet"><string>color:white;font-size:34px;font-weight:900;</string></property><property name="text"><string>HOLA</string></property></widget></item>
+      <item><widget class="QLabel" name="subtitle"><property name="wordWrap"><bool>true</bool></property><property name="styleSheet"><string>color:#B6D5E2;font-size:14px;</string></property><property name="text"><string>Consulta ventas, empleados y productos con filtros por fecha y comparativas mensuales.</string></property></widget></item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QFrame" name="filter_card">
+     <property name="styleSheet"><string>QFrame#filter_card { background-color: #FEF5ED; border-radius: 28px; }</string></property>
+     <layout class="QHBoxLayout" name="filterLayout">
+      <property name="leftMargin"><number>18</number></property>
+      <property name="topMargin"><number>14</number></property>
+      <property name="rightMargin"><number>18</number></property>
+      <property name="bottomMargin"><number>14</number></property>
+      <property name="spacing"><number>12</number></property>
+      <item><widget class="QLabel" name="desdeLabel"><property name="text"><string>Desde</string></property></widget></item>
+      <item><widget class="QDateEdit" name="start_date"/></item>
+      <item><widget class="QLabel" name="hastaLabel"><property name="text"><string>Hasta</string></property></widget></item>
+      <item><widget class="QDateEdit" name="end_date"/></item>
+      <item><widget class="QPushButton" name="apply_button"><property name="cursor"><cursorShape>PointingHandCursor</cursorShape></property><property name="styleSheet"><string>QPushButton{background-color:#FC814A;color:white;border:none;border-radius:16px;font-size:13px;font-weight:700;padding:8px 14px;}QPushButton:hover{background-color:#E66E3A;}</string></property><property name="text"><string>Aplicar filtro</string></property></widget></item>
+      <item><widget class="QPushButton" name="reset_button"><property name="cursor"><cursorShape>PointingHandCursor</cursorShape></property><property name="styleSheet"><string>QPushButton{background-color:#FEF5ED;color:#163246;border:1px solid #D8C8BA;border-radius:16px;font-size:13px;font-weight:700;padding:8px 14px;}QPushButton:hover{background-color:#F3E6D8;}</string></property><property name="text"><string>Ultimos 30 dias</string></property></widget></item>
+      <item><spacer name="filterSpacer"><property name="orientation"><enum>Qt::Horizontal</enum></property></spacer></item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="cards_row">
+     <property name="spacing"><number>14</number></property>
+     <item><widget class="QFrame" name="card_pedidos"><property name="styleSheet"><string>QFrame#card_pedidos { background-color:#FEF5ED; border-radius:24px; }</string></property><layout class="QVBoxLayout"><item><widget class="QLabel" name="title"><property name="styleSheet"><string>color:#7B97A5;font-size:12px;font-weight:700;</string></property><property name="text"><string>Pedidos</string></property></widget></item><item><widget class="QLabel" name="value"><property name="styleSheet"><string>color:#163246;font-size:26px;font-weight:900;</string></property><property name="text"><string>0</string></property></widget></item><item><widget class="QLabel" name="subtitle"><property name="styleSheet"><string>color:#B6D5E2;font-size:11px;</string></property><property name="text"><string>Pedidos del periodo</string></property></widget></item></layout></widget></item>
+     <item><widget class="QFrame" name="card_clientes"><property name="styleSheet"><string>QFrame#card_clientes { background-color:#FEF5ED; border-radius:24px; }</string></property><layout class="QVBoxLayout"><item><widget class="QLabel" name="title"><property name="styleSheet"><string>color:#7B97A5;font-size:12px;font-weight:700;</string></property><property name="text"><string>Clientes</string></property></widget></item><item><widget class="QLabel" name="value"><property name="styleSheet"><string>color:#163246;font-size:26px;font-weight:900;</string></property><property name="text"><string>0</string></property></widget></item><item><widget class="QLabel" name="subtitle"><property name="styleSheet"><string>color:#B6D5E2;font-size:11px;</string></property><property name="text"><string>Clientes distintos</string></property></widget></item></layout></widget></item>
+     <item><widget class="QFrame" name="card_ingresos"><property name="styleSheet"><string>QFrame#card_ingresos { background-color:#FEF5ED; border-radius:24px; }</string></property><layout class="QVBoxLayout"><item><widget class="QLabel" name="title"><property name="styleSheet"><string>color:#7B97A5;font-size:12px;font-weight:700;</string></property><property name="text"><string>Ingresos</string></property></widget></item><item><widget class="QLabel" name="value"><property name="styleSheet"><string>color:#163246;font-size:26px;font-weight:900;</string></property><property name="text"><string>0 €</string></property></widget></item><item><widget class="QLabel" name="subtitle"><property name="styleSheet"><string>color:#B6D5E2;font-size:11px;</string></property><property name="text"><string>Ventas totales</string></property></widget></item></layout></widget></item>
+     <item><widget class="QFrame" name="card_empleados"><property name="styleSheet"><string>QFrame#card_empleados { background-color:#FEF5ED; border-radius:24px; }</string></property><layout class="QVBoxLayout"><item><widget class="QLabel" name="title"><property name="styleSheet"><string>color:#7B97A5;font-size:12px;font-weight:700;</string></property><property name="text"><string>Empleados</string></property></widget></item><item><widget class="QLabel" name="value"><property name="styleSheet"><string>color:#163246;font-size:26px;font-weight:900;</string></property><property name="text"><string>0</string></property></widget></item><item><widget class="QLabel" name="subtitle"><property name="styleSheet"><string>color:#B6D5E2;font-size:11px;</string></property><property name="text"><string>Total de empleados</string></property></widget></item></layout></widget></item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="content_area">
+     <property name="spacing"><number>18</number></property>
+     <item>
+      <layout class="QVBoxLayout" name="left_column">
+       <property name="spacing"><number>18</number></property>
+       <item>
+        <widget class="QFrame" name="chart_card">
+         <property name="styleSheet"><string>QFrame#chart_card { background-color:#FEF5ED; border-radius:28px; }</string></property>
+         <layout class="QVBoxLayout" name="chartLayout">
+          <property name="leftMargin"><number>18</number></property>
+          <property name="topMargin"><number>18</number></property>
+          <property name="rightMargin"><number>18</number></property>
+          <property name="bottomMargin"><number>18</number></property>
+          <item><widget class="QLabel" name="chart_title"><property name="styleSheet"><string>color:#163246;font-size:18px;font-weight:800;</string></property><property name="text"><string>Comparativa de ganancias por mes</string></property></widget></item>
+          <item><widget class="QWidget" name="chart_placeholder"><layout class="QVBoxLayout" name="chart_placeholder_layout"/></widget></item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="employees_card">
+         <property name="styleSheet"><string>QFrame#employees_card { background-color:#FEF5ED; border-radius:28px; }</string></property>
+         <layout class="QVBoxLayout" name="employeesLayout">
+          <property name="leftMargin"><number>18</number></property>
+          <property name="topMargin"><number>18</number></property>
+          <property name="rightMargin"><number>18</number></property>
+          <property name="bottomMargin"><number>18</number></property>
+          <item><widget class="QLabel" name="emp_title"><property name="styleSheet"><string>color:#163246;font-size:18px;font-weight:800;</string></property><property name="text"><string>Empleados por tipo</string></property></widget></item>
+          <item><widget class="QLabel" name="employee_types_box"><property name="wordWrap"><bool>true</bool></property><property name="styleSheet"><string>color:#163246;font-size:13px;</string></property><property name="text"><string></string></property></widget></item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QFrame" name="products_card">
+       <property name="styleSheet"><string>QFrame#products_card { background-color:#FEF5ED; border-radius:28px; }</string></property>
+       <layout class="QVBoxLayout" name="productsLayout">
+        <property name="leftMargin"><number>18</number></property>
+        <property name="topMargin"><number>18</number></property>
+        <property name="rightMargin"><number>18</number></property>
+        <property name="bottomMargin"><number>18</number></property>
+        <property name="spacing"><number>10</number></property>
+        <item><widget class="QLabel" name="products_title"><property name="styleSheet"><string>color:#163246;font-size:18px;font-weight:800;</string></property><property name="text"><string>Productos por categoria</string></property></widget></item>
+        <item>
+         <layout class="QHBoxLayout" name="selector_row">
+          <item><widget class="QLabel" name="selector_label"><property name="styleSheet"><string>color:#163246;font-size:12px;font-weight:700;</string></property><property name="text"><string>Categoria</string></property></widget></item>
+          <item><widget class="QComboBox" name="category_selector"/></item>
+          <item><widget class="QLabel" name="order_label"><property name="styleSheet"><string>color:#163246;font-size:12px;font-weight:700;</string></property><property name="text"><string>Orden</string></property></widget></item>
+          <item><widget class="QComboBox" name="category_order_selector"><item><property name="text"><string>Mas vendidos</string></property></item><item><property name="text"><string>Menos vendidos</string></property></item></widget></item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QScrollArea" name="categories_scroll">
+          <property name="widgetResizable"><bool>true</bool></property>
+          <property name="styleSheet"><string>QScrollArea{border:none;background:transparent;}</string></property>
+          <widget class="QWidget" name="categories_container">
+           <property name="styleSheet"><string>background:transparent;</string></property>
+           <layout class="QVBoxLayout" name="categories_layout">
+            <property name="spacing"><number>10</number></property>
+            <property name="leftMargin"><number>0</number></property>
+            <property name="topMargin"><number>0</number></property>
+            <property name="rightMargin"><number>0</number></property>
+            <property name="bottomMargin"><number>0</number></property>
+            <item><spacer name="categories_spacer"><property name="orientation"><enum>Qt::Vertical</enum></property></spacer></item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+        <item><widget class="QLabel" name="category_summary_label"><property name="wordWrap"><bool>true</bool></property><property name="styleSheet"><string>color:#163246;font-size:12px;</string></property><property name="text"><string></string></property></widget></item>
+       </layout>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+</ui>

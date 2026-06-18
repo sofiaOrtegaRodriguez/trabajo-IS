@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AdminProductosListaUI</class>
+ <widget class="QFrame" name="AdminProductosListaUI">
+  <property name="styleSheet">
+   <string>QFrame#AdminProductosListaUI { background-color: #072D44; border-radius: 34px; } QLabel { background: transparent; }</string>
+  </property>
+  <layout class="QVBoxLayout" name="leftLayout">
+   <property name="leftMargin"><number>24</number></property>
+   <property name="topMargin"><number>24</number></property>
+   <property name="rightMargin"><number>24</number></property>
+   <property name="bottomMargin"><number>24</number></property>
+   <property name="spacing"><number>18</number></property>
+   <item>
+    <layout class="QHBoxLayout" name="topRow">
+     <item>
+      <widget class="QPushButton" name="left_back_button">
+       <property name="cursor"><cursorShape>PointingHandCursor</cursorShape></property>
+       <property name="minimumHeight"><number>48</number></property>
+       <property name="maximumWidth"><number>130</number></property>
+       <property name="styleSheet"><string>QPushButton{background-color:#FEF5ED;color:#163246;border:none;border-radius:24px;font-size:14px;font-weight:700;padding:0 18px;}QPushButton:hover{background-color:#F3E6D8;}</string></property>
+       <property name="text"><string>Volver</string></property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="topSpacer">
+       <property name="orientation"><enum>Qt::Horizontal</enum></property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="title_label">
+     <property name="styleSheet"><string>color:#FFFFFF;font-size:24px;font-weight:700;</string></property>
+     <property name="text"><string>Gestion de productos</string></property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="subtitle_label">
+     <property name="wordWrap"><bool>true</bool></property>
+     <property name="styleSheet"><string>color:#B6D5E2;font-size:13px;</string></property>
+     <property name="text"><string>Consulta, edita y elimina los productos actuales de la carta.</string></property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="empty_label">
+     <property name="alignment"><set>Qt::AlignCenter</set></property>
+     <property name="styleSheet"><string>color:#FFFFFF;font-size:22px;font-weight:700;</string></property>
+     <property name="text"><string>TODAVIA NO HAY PRODUCTOS</string></property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTableWidget" name="table">
+     <property name="columnCount"><number>8</number></property>
+     <property name="rowCount"><number>0</number></property>
+     <property name="editTriggers"><set>QAbstractItemView::NoEditTriggers</set></property>
+     <property name="selectionMode"><enum>QAbstractItemView::NoSelection</enum></property>
+     <property name="showGrid"><bool>false</bool></property>
+     <property name="styleSheet"><string>QTableWidget{background-color:#FEF5ED;border:none;border-radius:24px;color:#163246;font-size:13px;}QHeaderView::section{background-color:#FC814A;color:white;border:none;padding:10px;font-size:13px;font-weight:700;}</string></property>
+     <column>
+      <property name="text"><string>Nombre</string></property>
+     </column>
+     <column>
+      <property name="text"><string>Precio</string></property>
+     </column>
+     <column>
+      <property name="text"><string>Ingredientes</string></property>
+     </column>
+     <column>
+      <property name="text"><string>Disponible</string></property>
+     </column>
+     <column>
+      <property name="text"><string>Stock</string></property>
+     </column>
+     <column>
+      <property name="text"><string>Categoria</string></property>
+     </column>
+     <column>
+      <property name="text"><string>Editar</string></property>
+     </column>
+     <column>
+      <property name="text"><string>Eliminar</string></property>
+     </column>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+</ui>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FinPedidoUI</class>
+
+ <widget class="QWidget" name="FinPedidoUI">
+  <property name="styleSheet">
+   <string>
+    background-color:#072D44;
+    color:white;
+    font-size:16px;
+   </string>
+  </property>
+
+  <layout class="QVBoxLayout" name="layout">
+
+   <item>
+    <widget class="QLabel" name="lblTitulo">
+     <property name="text">
+      <string>🎉 Pedido realizado con éxito</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+
+   <item>
+    <widget class="QLabel" name="lblCodigo"/>
+   </item>
+
+   <item>
+    <widget class="QLabel" name="lblTotal"/>
+   </item>
+
+   <item>
+    <widget class="QLabel" name="lblPuntos"/>
+   </item>
+
+   <item>
+    <widget class="QPushButton" name="btnVolver">
+     <property name="text">
+      <string>↩ Volver a la cesta</string>
+     </property>
+    </widget>
+   </item>
+
+   <item>
+    <widget class="QPushButton" name="btnSalir">
+     <property name="text">
+      <string>🚪 Salir</string>
+     </property>
+    </widget>
+   </item>
+
+  </layout>
+ </widget>
+</ui>

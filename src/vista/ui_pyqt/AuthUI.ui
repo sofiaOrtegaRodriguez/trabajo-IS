@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AuthUI</class>
+ <widget class="QWidget" name="AuthUI">
+  <property name="geometry">
+   <rect><x>0</x><y>0</y><width>980</width><height>620</height></rect>
+  </property>
+  <property name="styleSheet">
+   <string>QWidget#AuthUI { background-color: #147DB2; }</string>
+  </property>
+  <layout class="QHBoxLayout" name="rootLayout">
+   <property name="leftMargin"><number>34</number></property>
+   <property name="topMargin"><number>30</number></property>
+   <property name="rightMargin"><number>34</number></property>
+   <property name="bottomMargin"><number>30</number></property>
+   <property name="spacing"><number>28</number></property>
+   <item>
+    <widget class="QFrame" name="brand_host">
+     <property name="minimumSize"><size><width>340</width><height>0</height></size></property>
+     <property name="styleSheet"><string>QFrame#brand_host { background-color: #FEF5ED; border-radius: 34px; }</string></property>
+     <layout class="QVBoxLayout" name="brand_host_layout">
+      <property name="leftMargin"><number>0</number></property>
+      <property name="topMargin"><number>0</number></property>
+      <property name="rightMargin"><number>0</number></property>
+      <property name="bottomMargin"><number>0</number></property>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="forms_host">
+     <layout class="QStackedLayout" name="forms_host_layout">
+      <property name="leftMargin"><number>0</number></property>
+      <property name="topMargin"><number>0</number></property>
+      <property name="rightMargin"><number>0</number></property>
+      <property name="bottomMargin"><number>0</number></property>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+</ui>

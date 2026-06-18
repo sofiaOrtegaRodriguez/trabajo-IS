@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CartaUI</class>
+ <widget class="QWidget" name="CartaUI">
+  <property name="geometry">
+   <rect><x>0</x><y>0</y><width>1100</width><height>700</height></rect>
+  </property>
+  <property name="windowTitle"><string>Carta</string></property>
+  <property name="styleSheet"><string>background-color: #5CA9D0;</string></property>
+
+  <layout class="QHBoxLayout" name="root_layout">
+   <property name="leftMargin"><number>22</number></property>
+   <property name="topMargin"><number>22</number></property>
+   <property name="rightMargin"><number>22</number></property>
+   <property name="bottomMargin"><number>22</number></property>
+   <property name="spacing"><number>18</number></property>
+
+   <!-- ═══════════════════════════════ PANEL IZQUIERDO ═══════════════════════════════ -->
+   <item>
+    <widget class="QFrame" name="left_panel">
+     <property name="styleSheet"><string>QFrame { background-color: #5CA9D0; border-radius: 34px; }</string></property>
+     <layout class="QVBoxLayout" name="left_layout">
+      <property name="leftMargin"><number>18</number></property>
+      <property name="topMargin"><number>18</number></property>
+      <property name="rightMargin"><number>18</number></property>
+      <property name="bottomMargin"><number>18</number></property>
+      <property name="spacing"><number>18</number></property>
+
+      <!-- CABECERA: título + botón cerrar sesión -->
+      <item>
+       <layout class="QHBoxLayout" name="header_layout">
+        <item>
+         <widget class="QLabel" name="header_label">
+          <property name="text"><string>Carta</string></property>
+          <property name="styleSheet"><string>color: #F3EFEF; font-family: Arial; font-size: 26px; font-weight: 700;</string></property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="header_spacer">
+          <property name="orientation"><enum>Qt::Horizontal</enum></property>
+          <property name="sizeHint" stdset="0"><size><width>40</width><height>20</height></size></property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_cerrar_sesion">
+          <property name="text"><string>Cerrar Sesión</string></property>
+          <property name="cursor"><cursorShape>PointingHandCursor</cursorShape></property>
+          <property name="minimumWidth"><number>120</number></property>
+          <property name="maximumWidth"><number>120</number></property>
+          <property name="styleSheet"><string>QPushButton { background-color: #ff6600; color: #F3EFEF; border: 1px solid #F3EFEF; border-radius: 8px; font-family: Arial; font-size: 13px; font-weight: bold; padding: 6px 12px; } QPushButton:hover { background-color: #e65c00; }</string></property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+
+      <!-- GRID DE PRODUCTOS (se rellena en .py) -->
+      <item stretch="1">
+       <widget class="QWidget" name="grid_container">
+        <layout class="QGridLayout" name="product_grid">
+         <property name="horizontalSpacing"><number>18</number></property>
+         <property name="verticalSpacing"><number>18</number></property>
+         <property name="leftMargin"><number>0</number></property>
+         <property name="topMargin"><number>0</number></property>
+         <property name="rightMargin"><number>0</number></property>
+         <property name="bottomMargin"><number>0</number></property>
+        </layout>
+       </widget>
+      </item>
+
+      <!-- NAVEGACIÓN DE PÁGINAS -->
+      <item>
+       <layout class="QHBoxLayout" name="nav_layout">
+        <property name="spacing"><number>16</number></property>
+        <item>
+         <spacer name="nav_spacer_left">
+          <property name="orientation"><enum>Qt::Horizontal</enum></property>
+          <property name="sizeHint" stdset="0"><size><width>40</width><height>20</height></size></property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="prev_button">
+          <property name="text"><string>&lt;</string></property>
+          <property name="cursor"><cursorShape>PointingHandCursor</cursorShape></property>
+          <property name="minimumWidth"><number>48</number></property>
+          <property name="maximumWidth"><number>48</number></property>
+          <property name="minimumHeight"><number>48</number></property>
+          <property name="maximumHeight"><number>48</number></property>
+          <property name="styleSheet"><string>QPushButton { background-color: #ff6600; color: #F3EFEF; border: none; border-radius: 24px; font-family: Arial; font-size: 20px; font-weight: 700; } QPushButton:hover { background-color: #e65c00; }</string></property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="page_info">
+          <property name="text"><string>Pagina 1 / 1</string></property>
+          <property name="alignment"><set>Qt::AlignCenter</set></property>
+          <property name="styleSheet"><string>color: #e65c00; font-family: Arial; font-size: 14px;</string></property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="next_button">
+          <property name="text"><string>&gt;</string></property>
+          <property name="cursor"><cursorShape>PointingHandCursor</cursorShape></property>
+          <property name="minimumWidth"><number>48</number></property>
+          <property name="maximumWidth"><number>48</number></property>
+          <property name="minimumHeight"><number>48</number></property>
+          <property name="maximumHeight"><number>48</number></property>
+          <property name="styleSheet"><string>QPushButton { background-color: #ff6600; color: #F3EFEF; border: none; border-radius: 24px; font-family: Arial; font-size: 20px; font-weight: 700; } QPushButton:hover { background-color: #e65c00; }</string></property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="nav_spacer_right">
+          <property name="orientation"><enum>Qt::Horizontal</enum></property>
+          <property name="sizeHint" stdset="0"><size><width>40</width><height>20</height></size></property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+
+     </layout>
+    </widget>
+   </item>
+
+   <!-- ═══════════════════════════════ PANEL DERECHO ════════════════════════════════ -->
+   <item>
+    <widget class="QFrame" name="right_panel">
+     <property name="minimumWidth"><number>210</number></property>
+     <property name="maximumWidth"><number>210</number></property>
+     <property name="styleSheet"><string>QFrame { background-color: #133749; border-radius: 34px; }</string></property>
+     <layout class="QVBoxLayout" name="right_layout">
+      <property name="leftMargin"><number>16</number></property>
+      <property name="topMargin"><number>18</number></property>
+      <property name="rightMargin"><number>16</number></property>
+      <property name="bottomMargin"><number>18</number></property>
+      <property name="spacing"><number>14</number></property>
+
+      <!-- TÍTULO CATEGORÍAS -->
+      <item>
+       <widget class="QLabel" name="categories_title">
+        <property name="text"><string>Categorias</string></property>
+        <property name="alignment"><set>Qt::AlignCenter</set></property>
+        <property name="styleSheet"><string>color: #e65c00; font-family: Arial; font-size: 14px; font-weight: 700;</string></property>
+       </widget>
+      </item>
+
+      <!-- BOTONES DE CATEGORÍA (estáticos, uno por categoría) -->
+      <item stretch="1">
+       <widget class="QWidget" name="categories_container">
+        <layout class="QVBoxLayout" name="categories_layout">
+         <property name="spacing"><number>10</number></property>
+         <property name="leftMargin"><number>0</number></property>
+         <property name="topMargin"><number>0</number></property>
+         <property name="rightMargin"><number>0</number></property>
+         <property name="bottomMargin"><number>0</number></property>
+
+         <item>
+          <widget class="QPushButton" name="cat_btn_sushi">
+           <property name="text"><string>Sushi</string></property>
+           <property name="cursor"><cursorShape>PointingHandCursor</cursorShape></property>
+           <property name="minimumHeight"><number>76</number></property>
+           <property name="styleSheet"><string>QPushButton { background-color: #ff6600; color: #F3EFEF; border: 1px solid #ff6600; border-radius: 20px; font-family: Arial; font-size: 14px; font-weight: 700; padding: 12px; } QPushButton:hover { background-color: #e65c00; color: #F3EFEF; border: 1px solid #ff6600; }</string></property>
+          </widget>
+         </item>
+
+         <item>
+          <widget class="QPushButton" name="cat_btn_fritos">
+           <property name="text"><string>Fritos</string></property>
+           <property name="cursor"><cursorShape>PointingHandCursor</cursorShape></property>
+           <property name="minimumHeight"><number>76</number></property>
+           <property name="styleSheet"><string>QPushButton { background-color: #5CA9D0; color: #F6F2F2; border: 1px solid #133749; border-radius: 20px; font-family: Arial; font-size: 14px; font-weight: 700; padding: 12px; } QPushButton:hover { background-color: #ff6600; color: #F3EFEF; border: 1px solid #ff6600; }</string></property>
+          </widget>
+         </item>
+
+         <item>
+          <widget class="QPushButton" name="cat_btn_bebidas">
+           <property name="text"><string>Bebidas</string></property>
+           <property name="cursor"><cursorShape>PointingHandCursor</cursorShape></property>
+           <property name="minimumHeight"><number>76</number></property>
+           <property name="styleSheet"><string>QPushButton { background-color: #5CA9D0; color: #F6F2F2; border: 1px solid #133749; border-radius: 20px; font-family: Arial; font-size: 14px; font-weight: 700; padding: 12px; } QPushButton:hover { background-color: #ff6600; color: #F3EFEF; border: 1px solid #ff6600; }</string></property>
+          </widget>
+         </item>
+
+         <item>
+          <widget class="QPushButton" name="cat_btn_postres">
+           <property name="text"><string>Postres</string></property>
+           <property name="cursor"><cursorShape>PointingHandCursor</cursorShape></property>
+           <property name="minimumHeight"><number>76</number></property>
+           <property name="styleSheet"><string>QPushButton { background-color: #5CA9D0; color: #F6F2F2; border: 1px solid #133749; border-radius: 20px; font-family: Arial; font-size: 14px; font-weight: 700; padding: 12px; } QPushButton:hover { background-color: #ff6600; color: #F3EFEF; border: 1px solid #ff6600; }</string></property>
+          </widget>
+         </item>
+
+         <item>
+          <widget class="QPushButton" name="cat_btn_promociones">
+           <property name="text"><string>Promociones</string></property>
+           <property name="cursor"><cursorShape>PointingHandCursor</cursorShape></property>
+           <property name="minimumHeight"><number>76</number></property>
+           <property name="styleSheet"><string>QPushButton { background-color: #5CA9D0; color: #F6F2F2; border: 1px solid #133749; border-radius: 20px; font-family: Arial; font-size: 14px; font-weight: 700; padding: 12px; } QPushButton:hover { background-color: #ff6600; color: #F3EFEF; border: 1px solid #ff6600; }</string></property>
+          </widget>
+         </item>
+
+        </layout>
+       </widget>
+      </item>
+
+      <!-- BOTONES CIRCULARES: perfil y carrito -->
+      <item>
+       <layout class="QHBoxLayout" name="bottom_buttons_layout">
+        <property name="spacing"><number>14</number></property>
+        <item>
+         <spacer name="btn_spacer_left">
+          <property name="orientation"><enum>Qt::Horizontal</enum></property>
+          <property name="sizeHint" stdset="0"><size><width>10</width><height>20</height></size></property>
+         </spacer>
+        </item>
+
+        <!-- Botón perfil: círculo con emoji 👤 como aproximación sin paintEvent -->
+        <item>
+         <widget class="QPushButton" name="profile_button">
+          <property name="text"><string>👤</string></property>
+          <property name="cursor"><cursorShape>PointingHandCursor</cursorShape></property>
+          <property name="minimumWidth"><number>58</number></property>
+          <property name="maximumWidth"><number>58</number></property>
+          <property name="minimumHeight"><number>58</number></property>
+          <property name="maximumHeight"><number>58</number></property>
+          <property name="styleSheet"><string>QPushButton { background-color: #5CA9D0; color: #ff6600; border: 2px solid #ff6600; border-radius: 29px; font-family: Arial; font-size: 22px; } QPushButton:hover { background-color: #ff6600; color: #F3EFEF; }</string></property>
+         </widget>
+        </item>
+
+        <!-- Botón carrito: círculo con emoji 🛒 como aproximación sin paintEvent -->
+        <item>
+         <widget class="QPushButton" name="cart_button">
+          <property name="text"><string>🛒</string></property>
+          <property name="cursor"><cursorShape>PointingHandCursor</cursorShape></property>
+          <property name="minimumWidth"><number>58</number></property>
+          <property name="maximumWidth"><number>58</number></property>
+          <property name="minimumHeight"><number>58</number></property>
+          <property name="maximumHeight"><number>58</number></property>
+          <property name="styleSheet"><string>QPushButton { background-color: #5CA9D0; color: #ff6600; border: 2px solid #ff6600; border-radius: 29px; font-family: Arial; font-size: 22px; } QPushButton:hover { background-color: #ff6600; color: #F3EFEF; }</string></property>
+         </widget>
+        </item>
+
+        <item>
+         <spacer name="btn_spacer_right">
+          <property name="orientation"><enum>Qt::Horizontal</enum></property>
+          <property name="sizeHint" stdset="0"><size><width>10</width><height>20</height></size></property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+
+     </layout>
+    </widget>
+   </item>
+
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

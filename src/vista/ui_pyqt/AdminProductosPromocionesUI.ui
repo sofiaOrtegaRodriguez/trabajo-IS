@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AdminProductosPromocionesUI</class>
+ <widget class="QFrame" name="AdminProductosPromocionesUI">
+  <property name="styleSheet">
+   <string>QFrame#AdminProductosPromocionesUI { background-color: #FEF5ED; border-radius: 34px; } QLabel { color: #163246; background: transparent; } QDateEdit, QSpinBox, QComboBox { background-color: white; border: 1px solid #D8C8BA; border-radius: 18px; color: #163246; font-size: 14px; padding: 10px 12px; }</string>
+  </property>
+  <layout class="QVBoxLayout" name="promoLayout">
+   <property name="leftMargin"><number>24</number></property>
+   <property name="topMargin"><number>24</number></property>
+   <property name="rightMargin"><number>24</number></property>
+   <property name="bottomMargin"><number>24</number></property>
+   <property name="spacing"><number>14</number></property>
+   <item>
+    <widget class="QLabel" name="promotion_title">
+     <property name="styleSheet"><string>color:#163246;font-size:22px;font-weight:700;</string></property>
+     <property name="text"><string>Promociones</string></property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="promotion_status">
+     <property name="wordWrap"><bool>true</bool></property>
+     <property name="styleSheet"><string>color:#7B97A5;font-size:12px;</string></property>
+     <property name="text"><string></string></property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QFormLayout" name="promoFormLayout">
+     <property name="horizontalSpacing"><number>12</number></property>
+     <property name="verticalSpacing"><number>12</number></property>
+     <item row="0" column="0">
+      <widget class="QLabel" name="discount_label"><property name="text"><string>Descuento</string></property></widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QSpinBox" name="discount_input">
+       <property name="minimum"><number>0</number></property>
+       <property name="maximum"><number>100</number></property>
+       <property name="suffix"><string> %</string></property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="start_label"><property name="text"><string>Fecha inicio</string></property></widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QDateEdit" name="start_date_input">
+       <property name="calendarPopup"><bool>true</bool></property>
+       <property name="displayFormat"><string>dd/MM/yyyy</string></property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="end_label"><property name="text"><string>Fecha fin</string></property></widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QDateEdit" name="end_date_input">
+       <property name="calendarPopup"><bool>true</bool></property>
+       <property name="displayFormat"><string>dd/MM/yyyy</string></property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="product_label"><property name="text"><string>Producto</string></property></widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QComboBox" name="promotion_product_input"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="promoActionsLayout">
+     <item>
+      <widget class="QPushButton" name="clear_promo_button">
+       <property name="minimumHeight"><number>48</number></property>
+       <property name="text"><string>Limpiar promo</string></property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="save_promo_button">
+       <property name="minimumHeight"><number>48</number></property>
+       <property name="text"><string>Anadir promocion</string></property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="empty_promotion_label">
+     <property name="alignment"><set>Qt::AlignCenter</set></property>
+     <property name="styleSheet"><string>color:#163246;font-size:18px;font-weight:700;</string></property>
+     <property name="text"><string>TODAVIA NO HAY PROMOCIONES</string></property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QTableWidget" name="promotion_table">
+     <property name="columnCount"><number>5</number></property>
+     <property name="rowCount"><number>0</number></property>
+     <property name="editTriggers"><set>QAbstractItemView::NoEditTriggers</set></property>
+     <property name="selectionMode"><enum>QAbstractItemView::NoSelection</enum></property>
+     <property name="showGrid"><bool>false</bool></property>
+     <property name="styleSheet"><string>QTableWidget{background-color:white;border:none;border-radius:24px;color:#163246;font-size:13px;}QHeaderView::section{background-color:#FC814A;color:white;border:none;padding:9px;font-size:12px;font-weight:700;}</string></property>
+     <column><property name="text"><string>ID</string></property></column>
+     <column><property name="text"><string>Producto</string></property></column>
+     <column><property name="text"><string>Descuento</string></property></column>
+     <column><property name="text"><string>Periodo</string></property></column>
+     <column><property name="text"><string>Eliminar</string></property></column>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+</ui>

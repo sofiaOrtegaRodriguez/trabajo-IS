@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PedidoAdminCardUI</class>
+ <widget class="QFrame" name="PedidoAdminCardUI">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>900</width>
+    <height>130</height>
+   </rect>
+  </property>
+  <property name="styleSheet">
+   <string>QFrame#PedidoAdminCardUI { background-color: #072D44; border: 1px solid rgba(252,129,74,0.2); border-left: 6px solid #FC814A; border-radius: 12px; } QLabel { background: transparent; }</string>
+  </property>
+
+  <layout class="QHBoxLayout" name="rowLayout">
+   <property name="spacing">
+    <number>15</number>
+   </property>
+   <property name="leftMargin">
+    <number>20</number>
+   </property>
+   <property name="topMargin">
+    <number>15</number>
+   </property>
+   <property name="rightMargin">
+    <number>20</number>
+   </property>
+   <property name="bottomMargin">
+    <number>15</number>
+   </property>
+
+   <!-- COLUMNA IZQUIERDA: id, cliente, hora -->
+   <item stretch="2">
+    <layout class="QVBoxLayout" name="leftLayout">
+     <item>
+      <widget class="QLabel" name="lblId">
+       <property name="styleSheet">
+        <string>font-size: 18px; font-weight: 800; color: #FEF5ED;</string>
+       </property>
+       <property name="text">
+        <string>Pedido #-</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lblCliente">
+       <property name="styleSheet">
+        <string>font-size: 13px; color: #B6D5E2; font-weight: 600;</string>
+       </property>
+       <property name="text">
+        <string>Cliente: — • Kiosco</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lblHora">
+       <property name="styleSheet">
+        <string>font-size: 12px; color: #7B97A5;</string>
+       </property>
+       <property name="text">
+        <string>Hora: --:--:--</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+
+   <!-- COLUMNA CENTRAL: detalle productos -->
+   <item stretch="4">
+    <layout class="QVBoxLayout" name="centerLayout">
+     <item>
+      <widget class="QLabel" name="lblDetalleTitulo">
+       <property name="styleSheet">
+        <string>font-size: 12px; font-weight: 700; color: #FC814A;</string>
+       </property>
+       <property name="text">
+        <string>DETALLE DEL PEDIDO:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lblProductos">
+       <property name="styleSheet">
+        <string>font-size: 14px; color: #FEF5ED;</string>
+       </property>
+       <property name="text">
+        <string>Sin productos registrados.</string>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+
+   <!-- COLUMNA DERECHA: total, badge estado, selector -->
+   <item stretch="2">
+    <layout class="QVBoxLayout" name="rightLayout">
+     <property name="spacing">
+      <number>8</number>
+     </property>
+     <item alignment="Qt::AlignRight">
+      <widget class="QLabel" name="lblTotal">
+       <property name="styleSheet">
+        <string>font-size: 20px; font-weight: 800; color: #FEF5ED;</string>
+       </property>
+       <property name="text">
+        <string>0.00 €</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item alignment="Qt::AlignRight">
+      <widget class="QLabel" name="lblBadgeEstado">
+       <property name="styleSheet">
+        <string>background-color: #072D44; color: #FEF5ED; border: 1px solid #FC814A; border-radius: 6px; font-size: 11px; font-weight: 800; padding: 4px 12px; letter-spacing: 0.5px;</string>
+       </property>
+       <property name="text">
+        <string>PENDIENTE</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item alignment="Qt::AlignRight">
+      <widget class="QComboBox" name="selectorEstado">
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="styleSheet">
+        <string>QComboBox { background-color: #072D44; border: 1px solid #FC814A; border-radius: 6px; color: #FEF5ED; padding: 4px 25px 4px 10px; font-size: 12px; font-weight: 600; } QComboBox::drop-down { subcontrol-origin: padding; subcontrol-position: top right; width: 20px; border: none; } QComboBox QAbstractItemView { background-color: #072D44; color: #FEF5ED; selection-background-color: #FC814A; }</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+
+  </layout>
+ </widget>
+</ui>

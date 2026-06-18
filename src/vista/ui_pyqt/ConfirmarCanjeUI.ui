@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ConfirmarCanjeUI</class>
+ <widget class="QDialog" name="ConfirmarCanjeUI">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>380</width>
+    <height>200</height>
+   </rect>
+  </property>
+
+  <property name="styleSheet">
+   <string>
+    QDialog {
+        background-color:#072D44;
+        color:white;
+        font-size:15px;
+    }
+    QPushButton {
+        color:white;
+        border:none;
+        border-radius:8px;
+        padding:8px 16px;
+        font-weight:bold;
+    }
+   </string>
+  </property>
+
+  <layout class="QVBoxLayout" name="mainLayout">
+
+   <item>
+    <widget class="QLabel" name="lblTitulo">
+     <property name="text">
+      <string>Canjear puntos</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="styleSheet">
+      <string>font-size:18px; font-weight:bold;</string>
+     </property>
+    </widget>
+   </item>
+
+   <item>
+    <widget class="QLabel" name="lblMensaje">
+     <property name="text">
+      <string>¿Seguro que quieres canjear tus puntos?</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+
+   <item>
+    <layout class="QHBoxLayout" name="botonesLayout">
+
+     <item>
+      <widget class="QPushButton" name="btnCancelar">
+       <property name="text">
+        <string>Cancelar</string>
+       </property>
+       <property name="styleSheet">
+        <string>QPushButton { background-color:#1A6B9A; } QPushButton:hover { background-color:#5CA9D0; }</string>
+       </property>
+      </widget>
+     </item>
+
+     <item>
+      <widget class="QPushButton" name="btnConfirmar">
+       <property name="text">
+        <string>Confirmar</string>
+       </property>
+       <property name="styleSheet">
+        <string>QPushButton { background-color:#FC814A; } QPushButton:hover { background-color:#E66E3A; }</string>
+       </property>
+      </widget>
+     </item>
+
+    </layout>
+   </item>
+
+  </layout>
+ </widget>
+</ui>

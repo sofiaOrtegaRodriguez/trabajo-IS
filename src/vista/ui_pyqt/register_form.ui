@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>RegisterForm</class>
+ <widget class="QWidget" name="RegisterForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>420</width>
+    <height>560</height>
+   </rect>
+  </property>
+
+  <layout class="QVBoxLayout" name="rootLayout">
+   <property name="leftMargin"><number>0</number></property>
+   <property name="topMargin"><number>0</number></property>
+   <property name="rightMargin"><number>0</number></property>
+   <property name="bottomMargin"><number>0</number></property>
+
+   <item>
+    <widget class="QFrame" name="card">
+     <property name="styleSheet">
+      <string notr="true">QFrame#card { background-color: #1F3A4D; border-radius: 34px; }</string>
+     </property>
+
+     <layout class="QVBoxLayout" name="cardLayout">
+      <property name="leftMargin"><number>34</number></property>
+      <property name="topMargin"><number>34</number></property>
+      <property name="rightMargin"><number>34</number></property>
+      <property name="bottomMargin"><number>24</number></property>
+
+      <item>
+       <layout class="QHBoxLayout">
+
+        <item>
+         <layout class="QVBoxLayout">
+
+          <item>
+           <widget class="QLabel" name="titleLabel">
+            <property name="text">
+             <string>Crear cuenta</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color:white;font-size:26px;font-weight:700;</string>
+            </property>
+           </widget>
+          </item>
+
+          <item>
+           <widget class="QLabel" name="subtitleLabel">
+            <property name="text">
+             <string>Introduce tus datos para empezar.</string>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color:#C9B9AC;font-size:14px;</string>
+            </property>
+           </widget>
+          </item>
+
+         </layout>
+        </item>
+
+        <item>
+         <widget class="QLabel" name="logo_label">
+          <property name="minimumSize">
+           <size><width>108</width><height>108</height></size>
+          </property>
+         </widget>
+        </item>
+
+       </layout>
+      </item>
+
+      <item>
+       <widget class="QLineEdit" name="name_input">
+        <property name="minimumSize">
+         <size><width>0</width><height>48</height></size>
+        </property>
+        <property name="placeholderText">
+         <string>Nombre completo</string>
+        </property>
+       </widget>
+      </item>
+
+      <item>
+       <widget class="QLineEdit" name="user_input">
+        <property name="minimumSize">
+         <size><width>0</width><height>48</height></size>
+        </property>
+        <property name="placeholderText">
+         <string>Correo</string>
+        </property>
+       </widget>
+      </item>
+
+      <item>
+       <widget class="QLineEdit" name="pass_input">
+        <property name="minimumSize">
+         <size><width>0</width><height>48</height></size>
+        </property>
+        <property name="placeholderText">
+         <string>Contrasena</string>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+       </widget>
+      </item>
+
+      <item>
+       <widget class="QLineEdit" name="confirm_input">
+        <property name="minimumSize">
+         <size><width>0</width><height>48</height></size>
+        </property>
+        <property name="placeholderText">
+         <string>Confirmar contrasena</string>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+       </widget>
+      </item>
+
+      <item>
+       <widget class="QLabel" name="error_label">
+        <property name="text">
+         <string/>
+        </property>
+        <property name="visible">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+
+      <item>
+       <widget class="QPushButton" name="submit_button">
+        <property name="text">
+         <string>Registrarse   &gt;</string>
+        </property>
+       </widget>
+      </item>
+
+      <item>
+       <layout class="QHBoxLayout">
+
+        <item>
+         <widget class="QLabel" name="footerLabel">
+          <property name="text">
+           <string>Ya tienes cuenta?</string>
+          </property>
+         </widget>
+        </item>
+
+        <item>
+         <widget class="QPushButton" name="switch_button">
+          <property name="text">
+           <string>Inicia sesion</string>
+          </property>
+         </widget>
+        </item>
+
+       </layout>
+      </item>
+
+     </layout>
+    </widget>
+   </item>
+
+  </layout>
+ </widget>
+
+ <resources/>
+ <connections/>
+</ui>
+

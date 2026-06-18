@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AdminDashboardUI</class>
+ <widget class="QWidget" name="AdminDashboardUI">
+  <property name="geometry">
+   <rect><x>0</x><y>0</y><width>980</width><height>640</height></rect>
+  </property>
+  <property name="windowTitle">
+   <string>sushUle - Panel de administracion</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: #0F1C24;</string>
+  </property>
+  <layout class="QVBoxLayout" name="rootLayout">
+   <property name="leftMargin"><number>28</number></property>
+   <property name="topMargin"><number>28</number></property>
+   <property name="rightMargin"><number>28</number></property>
+   <property name="bottomMargin"><number>28</number></property>
+   <property name="spacing"><number>20</number></property>
+   <item>
+    <widget class="QFrame" name="header_card">
+     <property name="styleSheet">
+      <string notr="true">QFrame#header_card { background-color: #1F3A4D; border-radius: 34px; }</string>
+     </property>
+     <layout class="QVBoxLayout" name="header_layout">
+      <property name="leftMargin"><number>28</number></property>
+      <property name="topMargin"><number>28</number></property>
+      <property name="rightMargin"><number>28</number></property>
+      <property name="bottomMargin"><number>28</number></property>
+      <property name="spacing"><number>10</number></property>
+      <item>
+       <layout class="QHBoxLayout" name="top_row">
+        <item>
+         <widget class="QLabel" name="title_label">
+          <property name="text"><string>Panel de administracion</string></property>
+          <property name="styleSheet">
+           <string notr="true">color:white; font-size:22px; font-weight:800;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="top_spacer">
+          <property name="orientation"><enum>Qt::Horizontal</enum></property>
+          <property name="sizeHint" stdset="0"><size><width>40</width><height>20</height></size></property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="logout_button">
+          <property name="text"><string>Cerrar sesion</string></property>
+          <property name="cursor"><cursorShape>PointingHandCursor</cursorShape></property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton { background-color: #E8732C; color: white; border: none; border-radius: 18px; font-size: 12px; font-weight: 700; padding: 8px 14px; } QPushButton:hover { background-color: #C95E1E; }</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QLabel" name="greeting_label">
+        <property name="text"><string>HOLA ADMIN</string></property>
+        <property name="styleSheet">
+         <string notr="true">color:white; font-size:34px; font-weight:900;</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="subtitle_label">
+        <property name="text"><string>Desde aqui puedes entrar al area de productos o gestionar al personal.</string></property>
+        <property name="wordWrap"><bool>true</bool></property>
+        <property name="styleSheet">
+         <string notr="true">color:#8AA1AD; font-size:14px;</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="actions_layout">
+     <property name="spacing"><number>18</number></property>
+     <item>
+      <widget class="QPushButton" name="products_button">
+       <property name="text"><string>Administrar productos
+Crear, editar y eliminar productos</string></property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton { background-color: #F3E6D8; border-radius: 32px; padding: 26px; text-align: left; font-size: 16px; } QPushButton:hover { background-color: #EAD9C7; }</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="staff_button">
+       <property name="text"><string>Gestionar personal
+Dar de alta, modificar o borrar usuarios</string></property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton { background-color: #F3E6D8; border-radius: 32px; padding: 26px; text-align: left; font-size: 16px; } QPushButton:hover { background-color: #EAD9C7; }</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

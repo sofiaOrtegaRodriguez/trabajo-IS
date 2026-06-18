@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>HistorialUI</class>
+ <widget class="QWidget" name="HistorialUI">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1100</width>
+    <height>750</height>
+   </rect>
+  </property>
+
+  <property name="styleSheet">
+   <string>
+    QWidget {
+        background-color:#147DB2;
+    }
+   </string>
+  </property>
+
+  <layout class="QVBoxLayout" name="mainLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+
+   <item>
+    <widget class="QFrame" name="topbar">
+     <property name="styleSheet">
+      <string>background:#072D44;</string>
+     </property>
+
+     <layout class="QHBoxLayout" name="topbarLayout">
+      <property name="leftMargin">
+       <number>16</number>
+      </property>
+      <property name="topMargin">
+       <number>10</number>
+      </property>
+      <property name="rightMargin">
+       <number>16</number>
+      </property>
+      <property name="bottomMargin">
+       <number>10</number>
+      </property>
+
+      <item>
+       <widget class="QPushButton" name="btnBack">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string>QPushButton{background:transparent;color:#FEF5ED;border:none;font-size:13px;font-weight:700;}QPushButton:hover{color:#FC814A;}</string>
+        </property>
+        <property name="text">
+         <string>← Inicio</string>
+        </property>
+       </widget>
+      </item>
+
+      <item>
+       <widget class="QLabel" name="lblTitle">
+        <property name="styleSheet">
+         <string>color:#FFFFFF;font-size:14px;font-weight:700;</string>
+        </property>
+        <property name="text">
+         <string>HISTORIAL DE PEDIDOS</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+
+      <item>
+       <widget class="QFrame" name="ptsBox">
+        <property name="styleSheet">
+         <string>background:#FEF5ED;border-radius:14px;border:2px solid #FC814A;</string>
+        </property>
+
+        <layout class="QHBoxLayout" name="ptsLayout">
+         <property name="spacing">
+          <number>4</number>
+         </property>
+         <property name="leftMargin">
+          <number>12</number>
+         </property>
+         <property name="topMargin">
+          <number>6</number>
+         </property>
+         <property name="rightMargin">
+          <number>12</number>
+         </property>
+         <property name="bottomMargin">
+          <number>6</number>
+         </property>
+
+         <item>
+          <widget class="QLabel" name="lblStar">
+           <property name="styleSheet">
+            <string>background:transparent;color:#FC814A;font-size:13px;</string>
+           </property>
+           <property name="text">
+            <string>⭐</string>
+           </property>
+          </widget>
+         </item>
+
+         <item>
+          <widget class="QLabel" name="lblPuntos">
+           <property name="styleSheet">
+            <string>background:transparent;color:#072D44;font-size:14px;font-weight:700;</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </widget>
+         </item>
+
+         <item>
+          <widget class="QLabel" name="lblPuntosSub">
+           <property name="styleSheet">
+            <string>background:transparent;color:#607D8B;font-size:11px;</string>
+           </property>
+           <property name="text">
+            <string> pts</string>
+           </property>
+          </widget>
+         </item>
+
+        </layout>
+       </widget>
+      </item>
+
+      <item>
+       <widget class="QPushButton" name="btnLogout">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string>QPushButton{background:#FC814A;color:white;border:none;border-radius:16px;font-size:12px;font-weight:700;padding:6px 14px;}QPushButton:hover{background:#E66E3A;}</string>
+        </property>
+        <property name="text">
+         <string>Cerrar sesión</string>
+        </property>
+       </widget>
+      </item>
+
+     </layout>
+    </widget>
+   </item>
+
+   <item>
+    <widget class="QFrame" name="sepLine">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>3</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>3</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string>background:#FC814A;</string>
+     </property>
+    </widget>
+   </item>
+
+   <item>
+    <widget class="QFrame" name="subheader">
+     <property name="styleSheet">
+      <string>background:#072D44;</string>
+     </property>
+
+     <layout class="QHBoxLayout" name="subheaderLayout">
+      <property name="leftMargin">
+       <number>20</number>
+      </property>
+      <property name="topMargin">
+       <number>10</number>
+      </property>
+      <property name="rightMargin">
+       <number>20</number>
+      </property>
+      <property name="bottomMargin">
+       <number>10</number>
+      </property>
+
+      <item>
+       <widget class="QLabel" name="lblBienvenida">
+        <property name="styleSheet">
+         <string>color:#FFFFFF;font-size:13px;font-weight:700;</string>
+        </property>
+        <property name="text">
+         <string>Bienvenid@</string>
+        </property>
+       </widget>
+      </item>
+
+      <item>
+       <widget class="QLabel" name="lblNumPedidos">
+        <property name="styleSheet">
+         <string>color:#B6D5E2;font-size:11px;</string>
+        </property>
+        <property name="text">
+         <string>0 pedidos registrados</string>
+        </property>
+       </widget>
+      </item>
+
+     </layout>
+    </widget>
+   </item>
+
+   <item>
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <property name="styleSheet">
+      <string>QScrollArea{border:none;background:transparent;}</string>
+     </property>
+
+     <widget class="QWidget" name="scrollContent">
+      <property name="styleSheet">
+       <string>background:transparent;</string>
+      </property>
+      <layout class="QVBoxLayout" name="itemsLayout">
+       <property name="spacing">
+        <number>14</number>
+       </property>
+       <property name="leftMargin">
+        <number>20</number>
+       </property>
+       <property name="topMargin">
+        <number>16</number>
+       </property>
+       <property name="rightMargin">
+        <number>20</number>
+       </property>
+       <property name="bottomMargin">
+        <number>16</number>
+       </property>
+
+       <item>
+        <spacer name="spacerBottom">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+
+  </layout>
+ </widget>
+</ui>
