@@ -18,6 +18,8 @@ from src.vista.ui.gestion_personal_ui import GestionPersonalUI
 from src.vista.ui.carta_ui import CartaUI
 from src.vista.ui.cesta_ui import CestaUI
 from src.vista.ui.historial_ui import HistorialUI
+from src.vista.ui.fin_pedido_ui import FinPedidoUI
+from src.vista.ui.confirmar_canje_ui import ConfirmarCanjeUI
 
 
 class VentanaPrincipal(QMainWindow):
@@ -123,7 +125,7 @@ class VentanaPrincipal(QMainWindow):
     def ir_gerente_dashboard(self):
         """Construye y muestra el dashboard del gerente."""
         dashboard = GerenteDashboardUI(self._sesion_actual)
-        dashboard.cerrar_sesion.connect(self.mostrar_login)
+        dashboard.cerrar_sesion.connect(self.cerrar_dashboard_gerente)
         dashboard.filtro_aplicado.connect(self._recargar_dashboard_gerente)
         dashboard.rango_reseteado.connect(self._recargar_dashboard_gerente)
         dashboard.categoria_cambiada.connect(self._recargar_dashboard_gerente)
@@ -132,6 +134,10 @@ class VentanaPrincipal(QMainWindow):
         self._recargar_dashboard_gerente()
         self.showMaximized()
 
+    def cerrar_dashboard_gerente(self):
+        if self.pedir_confirmacion("Cerrar sesión", "¿Seguro que quieres cerrar sesión?"):
+            self.mostrar_login()
+
     def ir_panel_pedidos(self):
         """Construye y muestra el panel de pedidos (cocina / cajero)."""
         ventana_pedidos = PedidosUI()
@@ -139,7 +145,7 @@ class VentanaPrincipal(QMainWindow):
         filtro_activo = self._ctrl_pedidos.obtener_filtro()
         ventana_pedidos.inicializar_filtros(filtros_disponibles, filtro_activo)
         self._cargar_pedidos_en_vista(ventana_pedidos)
-        ventana_pedidos.cerrar_sesion.connect(self.mostrar_login)
+        ventana_pedidos.cerrar_sesion.connect(self.cerrar_panel_pedidos)
         ventana_pedidos.solicitar_ir_carta.connect(self._ctrl_cliente.ir_carta)
         ventana_pedidos.configurar_visibilidad_roles(self._controlador.debe_mostrar_ver_carta())
         ventana_pedidos.cambio_estado_requested.connect(self._on_cambio_estado_pedido)
@@ -149,9 +155,12 @@ class VentanaPrincipal(QMainWindow):
         self.showNormal()
         self.adjustSize()
 
+    def cerrar_panel_pedidos(self):
+        if self.pedir_confirmacion("Cerrar sesión", "¿Seguro que quieres cerrar sesión?"):
+            self.mostrar_login()
+
     def mostrar_fin_pedido(self, codigo, total, puntos):
         """Muestra la pantalla de confirmación de pedido completado."""
-        from src.vista.ui.fin_pedido_ui import FinPedidoUI
         fin = FinPedidoUI(codigo, total, puntos)
         fin.volver_cesta.connect(self._ctrl_cliente.ir_cesta)
         fin.salir_login.connect(self.mostrar_login)
@@ -179,7 +188,6 @@ class VentanaPrincipal(QMainWindow):
 
     def mostrar_dialogo_canje(self, puntos: int, descuento: float) -> bool:
         """Muestra el diálogo de confirmación de canje y devuelve True si el usuario acepta."""
-        from src.vista.ui.confirmar_canje_ui import ConfirmarCanjeUI
         dialogo = ConfirmarCanjeUI(puntos=puntos, descuento=descuento, parent=self)
         return dialogo.exec_() == ConfirmarCanjeUI.Accepted
 

@@ -64,7 +64,7 @@ class ControladorPrincipal:
         """Un cajero vuelve al panel de pedidos; un cliente vuelve al login."""
         if self.debe_mostrar_ver_carta():
             self._vista.ir_panel_pedidos()
-        else:
+        elif self._vista.pedir_confirmacion("Cerrar sesión", "¿Seguro que quieres cerrar sesión?"):
             self._vista.mostrar_login()
 
     # ── Privados ──────────────────────────────────────────────────────────────

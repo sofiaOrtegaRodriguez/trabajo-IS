@@ -200,7 +200,7 @@ class ControladorCliente:
         if es_cajero:
             self._vista.ir_panel_pedidos()
         else:
-            self._vista.mostrar_login()
+            self._confirmar_cerrar_sesion()
 
     def _confirmar_cerrar_sesion(self):
         if self._vista.pedir_confirmacion("Cerrar sesión", "¿Seguro que quieres cerrar sesión?"):
