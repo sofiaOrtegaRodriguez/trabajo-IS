@@ -36,34 +36,44 @@ from src.vista.ui.auth_common import C_ORANGE, C_ORANGE_DARK
 
 
 class AdminProductosUI(QWidget):
-    volver_menu = pyqtSignal()
-    editar_producto_requested = pyqtSignal(object)
-    guardar_producto_requested = pyqtSignal(str, float, str, str, int, str)
-    eliminar_producto_requested = pyqtSignal(str)
-    guardar_promocion_requested = pyqtSignal(dict)
-    eliminar_promocion_requested = pyqtSignal(int)
+
+    #SEÑALES
+
+    volver_menu = pyqtSignal() #señal que se emite cuando el usuario hace clic en el botón de VOLVER AL MENU
+    editar_producto_requested = pyqtSignal(object) #señal que se emite cuando el usuario hace clic en el botón de EDITAR PRODUCTO, pasando el objeto producto como argumento
+    guardar_producto_requested = pyqtSignal(str, float, str, str, int, str) #señal que se emite cuando el usuario hace clic en el botón de GUARDAR PRODUCTO, pasando los datos del producto como argumentos
+    eliminar_producto_requested = pyqtSignal(str) #señal que se emite cuando el usuario hace clic en el botón de ELIMINAR PRODUCTO, pasando el nombre del producto como argumento
+    guardar_promocion_requested = pyqtSignal(dict) #señal que se emite cuando el usuario hace clic en el botón de GUARDAR PROMOCIÓN, pasando el diccionario con los datos de la promoción como argumento
+    eliminar_promocion_requested = pyqtSignal(int) #señal que se emite cuando el usuario hace clic en el botón de ELIMINAR PROMOCIÓN, pasando el ID de la promoción como argumento
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setAttribute(Qt.WA_DeleteOnClose, True)
+        self.setAttribute(Qt.WA_DeleteOnClose, True) #se establece el atributo WA_DeleteOnClose para que el widget se elimine de la memoria cuando se cierre
 
-        self.productos = []
-        self.promociones = []
-        self.current_mode = "productos"
-        self.product_name_options = []
-        self._categorias = []
-        self._mensaje_productos_vacios = "No hay productos para mostrar."
-        self._mensaje_promociones_vacias = "No hay promociones para mostrar."
-        self._producto_editando = None
+        self.productos = [] #lista de productos que se mostrarán en la tabla
+        self.promociones = [] #lista de promociones que se mostrarán en la tabla
+        self.current_mode = "productos" #modo actual de la vista, puede ser "productos" o "promociones"
+        self.product_name_options = [] #lista de nombres de productos que se utilizará para autocompletar el campo de selección de producto en la sección de promociones
+        self._categorias = [] #lista de categorías que se utilizará para llenar el combobox de categorías en la sección de productos
+        self._mensaje_productos_vacios = "No hay productos para mostrar." #mensaje que se mostrará cuando no haya productos para mostrar
+        self._mensaje_promociones_vacias = "No hay promociones para mostrar." #mensaje que se mostrará cuando no haya promociones para mostrar
+        self._producto_editando = None #nombre del producto que se está editando actualmente, None si no se está editando ningún producto
 
+        # se carga la interfaz de usuario desde el archivo .ui y se inicializan los elementos de la vista
         self._load_ui()
         self._wire_children()
         self._set_mode(self.current_mode)
 
     def _ui_path(self, filename):
+        #este método devuelve la ruta completa del archivo .ui que se encuentra en la carpeta ui_pyqt, dado el nombre del archivo
         return os.path.join(os.path.dirname(__file__), "..", "ui_pyqt", filename)
 
     def _load_ui(self):
+        #este método carga la interfaz de usuario desde el archivo .ui y configura el diseño y los elementos de la vista
+
+        #hay muchas líneas de código aquí, pero básicamente se trata de cargar el archivo .ui, establecer el título, tamaño y estilo de la ventana, 
+        #crear los contenedores y widgets necesarios, y configurar las propiedades de los elementos de la vista (como tablas, botones, campos de entrada, etc.)  
+    
         self.setWindowTitle("sushUle - Administracion de Productos")
         self.resize(1380, 820)
         self.setMinimumSize(1180, 720)
@@ -73,6 +83,7 @@ class AdminProductosUI(QWidget):
         root.setContentsMargins(28, 28, 28, 28)
         root.setSpacing(22)
 
+        #se definen los contenedores y widgets de la vista, y se cargan los archivos .ui correspondientes a cada sección (productos, promociones, etc.)
         self.left_card = QFrame()
         self.right_card = QFrame()
         uic.loadUi(self._ui_path("AdminProductosListaUI.ui"), self.left_card)
@@ -123,6 +134,9 @@ class AdminProductosUI(QWidget):
         self.promotion_table = self.promotion_card.findChild(QTableWidget, "promotion_table")
 
         if self.table is not None:
+            #si la tabla de productos existe, se configuran sus propiedades para que no tenga encabezados verticales,
+            #no permita selección ni edición, no muestre la cuadrícula, y ajuste el tamaño de las columnas según el contenido  
+
             self.table.verticalHeader().setVisible(False)
             self.table.setSelectionMode(QTableWidget.NoSelection)
             self.table.setEditTriggers(QTableWidget.NoEditTriggers)
@@ -133,6 +147,8 @@ class AdminProductosUI(QWidget):
             self.table.horizontalHeader().setSectionResizeMode(7, QHeaderView.ResizeToContents)
 
         if self.promotion_table is not None:
+            #si la tabla de promociones existe, se configuran sus propiedades para que no tenga encabezados verticales,
+            #no permita selección ni edición, no muestre la cuadrícula, y ajuste el tamaño de las columnas según el contenido   
             self.promotion_table.verticalHeader().setVisible(False)
             self.promotion_table.setSelectionMode(QTableWidget.NoSelection)
             self.promotion_table.setEditTriggers(QTableWidget.NoEditTriggers)
@@ -141,21 +157,30 @@ class AdminProductosUI(QWidget):
             self.promotion_table.horizontalHeader().setSectionResizeMode(4, QHeaderView.ResizeToContents)
 
         if self.start_date_input is not None:
+            #si el campo de fecha de inicio existe, se configura para que muestre un calendario emergente y se establezca la fecha actual como valor predeterminado
             self.start_date_input.setCalendarPopup(True)
             self.start_date_input.setDate(QDate.currentDate())
         if self.end_date_input is not None:
+            #si el campo de fecha de fin existe, se configura para que muestre un calendario emergente y se establezca la fecha actual más 7 días como valor predeterminado
             self.end_date_input.setCalendarPopup(True)
             self.end_date_input.setDate(QDate.currentDate().addDays(7))
         if self.discount_input is not None:
+            #si el campo de descuento existe, se configura para que tenga un rango de 0 a 100
             self.discount_input.setRange(0, 100)
         if self.price_input is not None:
+            #si el campo de precio existe, se configura para que tenga un rango de 0.01 a 9999.99, con dos decimales y un prefijo de "EUR "
             self.price_input.setMaximum(9999.99)
             self.price_input.setDecimals(2)
             self.price_input.setPrefix("EUR ")
             self.price_input.setMinimum(0.01)
         if self.available_input is not None and self.available_input.count() == 0:
+            #si el combobox de disponibilidad existe y está vacío, se agregan las opciones "Y" y "N" para indicar si el producto está disponible o no   
             self.available_input.addItems(["Y", "N"])
 
+    """
+    sirve para conectar botones
+    
+    """
     def _wire_children(self):
         self.left_back_button = self.left_card.findChild(QPushButton, "left_back_button")
         if self.left_back_button is not None:
@@ -377,6 +402,7 @@ class AdminProductosUI(QWidget):
             "categoria": self.category_input.currentText().strip(),
         }
 
+    
     def _emit_guardar_producto_requested(self):
         datos = self._collect_product_data()
         self.guardar_producto_requested.emit(
@@ -391,11 +417,15 @@ class AdminProductosUI(QWidget):
     def _set_category_value(self, categoria):
         self.category_input.setCurrentText(str(categoria).strip())
 
+    #emiten señales ------------------
     def _confirmar_eliminar_producto(self, producto):
         self.eliminar_producto_requested.emit(producto.nombre)
 
     def _emit_guardar_promocion_requested(self):
+        #este método recopila los datos del formulario de promoción y emite la señal guardar_promocion_requested con un diccionario que contiene el descuento, las fechas de inicio y fin, y el nombre del producto seleccionado    
+        
         self.guardar_promocion_requested.emit(
+            #emite 
             {
                 "descuento": int(self.discount_input.value()),
                 "fecha_inicio": self.start_date_input.date().toPyDate(),
@@ -403,8 +433,13 @@ class AdminProductosUI(QWidget):
                 "nombre_producto": self.promotion_product_input.currentText().strip(),
             }
         )
+    #----------------------------------
 
     def _clear_promotion_form(self):
+        #este método limpia los campos del formulario de promoción y restablece los valores predeterminados
+        # se establece el valor del campo de descuento a 0, la fecha de inicio a la fecha actual, la fecha de fin a 7 días después de la fecha actual,
+        # y se selecciona el primer producto disponible en el combobox de selección de producto si hay productos disponibles
+    
         self.discount_input.setValue(0)
         self.start_date_input.setDate(QDate.currentDate())
         self.end_date_input.setDate(QDate.currentDate().addDays(7))
@@ -414,11 +449,17 @@ class AdminProductosUI(QWidget):
             self.promotion_product_input.lineEdit().clear()
         self.promotion_status.setText("Formulario de promocion listo.")
 
+    #emite señales ----------------
     def _confirmar_eliminar_promocion(self, promocion):
+        #se obtiene el ID de la promoción a eliminar y se emite la señal correspondiente para que el controlador maneje la eliminación
+
         promocion_id = int(promocion.get("id_promocion"))
         self.eliminar_promocion_requested.emit(promocion_id)
+    #--------------------------------
 
     def _refresh_promotion_product_selector(self):
+        #este método actualiza el combobox de selección de producto en la sección de promociones, manteniendo el texto actual si es válido, o seleccionando el primer producto disponible si no lo es   
+
         current_text = self.promotion_product_input.currentText().strip()
         self.promotion_product_input.blockSignals(True)
         self.promotion_product_input.clear()
