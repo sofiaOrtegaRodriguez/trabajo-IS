@@ -9,17 +9,6 @@ Esta clase implementa el patrón FACHADA (Facade):
     servicio especializado correspondiente.
   - Los controladores nunca instancian ni conocen los servicios directamente;
     solo conocen a Logica.
-
-Estructura interna:
-  Logica
-  ├── _auth        → ServicioAuth       (login, registro)
-  ├── _empleados   → ServicioEmpleados  (CRUD empleados, tipos, categorías)
-  ├── _productos   → ServicioProductos  (CRUD productos, esquema BD)
-  ├── _promociones → ServicioPromociones(CRUD promociones, preparación vista)
-  ├── _pedidos     → ServicioPedidos    (pedidos, estados, filtros)
-  ├── _metricas    → ServicioMetricas   (dashboard gerente)
-  ├── _carta       → ServicioCarta      (carta paginada para el cliente)
-  └── _flujo_carta → ServicioFlujoCarta (flujo de navegación de la carta, se crea bajo demanda)
 """
 
 from src.modelo.dao.PedidoDaoJDBC import PedidoDaoJDBC
