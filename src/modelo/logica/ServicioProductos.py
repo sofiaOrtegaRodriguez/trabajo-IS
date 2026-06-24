@@ -1,5 +1,5 @@
 from src.modelo.dao.ProductoDaoJDBC import ProductoDaoJDBC
-
+from src.modelo.vo.ProductoVo import ProductoVo
 
 class ServicioProductos:
     """
@@ -172,7 +172,7 @@ class ServicioProductos:
         El import de ProductoVo es local (dentro del método) para evitar
         importaciones circulares en el arranque de la aplicación.
         """
-        from src.modelo.vo.ProductoVo import ProductoVo
+        
 
         categoria_final = self._normalize_category(categoria)
         # capitalize() → primera letra en mayúscula, resto en minúscula
