@@ -684,6 +684,7 @@ class AdminProductosUI(QWidget):
             datos["categoria"],
         )
 
+
     def _set_category_value(self, categoria):
         """Selecciona la categoría indicada en el combobox (usado en modo edición)."""
         self.category_input.setCurrentText(str(categoria).strip())
