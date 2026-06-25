@@ -15,5 +15,7 @@ _IMAGES = os.path.normpath(os.path.join(_HERE, "..", "imagenes"))
 
 
 def asset(*parts):
+    """Devuelve la ruta completa a un archivo de imagen en el directorio de imágenes.
+    Si el archivo no existe, devuelve None."""
     path = os.path.join(_IMAGES, *parts)
     return path if os.path.exists(path) else None

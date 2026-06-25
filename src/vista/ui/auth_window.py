@@ -87,20 +87,23 @@ class AuthPopup(QDialog):
 
 
 class AuthUI(QWidget):
-    login_requested = pyqtSignal(str, str)
-    register_requested = pyqtSignal(str, str, str)
+    login_requested = pyqtSignal(str, str) #señal que se emite al hacer login (correo, contrasena)
+    register_requested = pyqtSignal(str, str, str) #señal que se emite al hacer registro (nombre, correo, contrasena)
 
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("sushUle - Autenticacion")
+        self.setWindowTitle("sushUle - Autenticacion") #Titulo de la ventana
         self.resize(980, 620)
         self.setMinimumSize(980, 620)
         self.setStyleSheet(f"background-color: {C_BACKGROUND};")
-        uic.loadUi(os.path.join(os.path.dirname(__file__), "..", "ui_pyqt", "AuthUI.ui"), self)
-
+        #Carga el archivo .ui que define el diseño de la ventana de autenticación
+        uic.loadUi(os.path.join(os.path.dirname(__file__), "..", "ui_pyqt", "AuthUI.ui"), self) 
+        #se crea el panel de marca y se agrega al contenedor correspondiente
         self.brand_panel = BrandPanel(self.brand_host)
         self.brand_host.layout().addWidget(self.brand_panel)
 
+        #Se crea los formularios de inicio de sesión y registro, se agregan al contenedor correspondiente 
+        #y se establece el formulario de inicio de sesión como el visible por defecto
         self.login_card = LoginForm()
         self.register_card = RegisterForm()
         self.forms_host.layout().addWidget(self.login_card)
@@ -108,45 +111,57 @@ class AuthUI(QWidget):
         self.forms_host.layout().setCurrentWidget(self.login_card)
         self.login_popup = None
 
-        self.login_card.submitted.connect(self._submit_login)
-        self.login_card.switch_requested.connect(self.show_register)
-        self.register_card.submitted.connect(self._submit_register)
-        self.register_card.switch_requested.connect(self.show_login)
+        #Conectar señales de entrada y cambio de formulario a los métodos correspondientes
+        self.login_card.submitted.connect(self._submit_login) 
+        self.login_card.switch_requested.connect(self.show_register) 
+        self.register_card.submitted.connect(self._submit_register) 
+        self.register_card.switch_requested.connect(self.show_login) 
 
     def _submit_login(self):
+        """Se obtiene el correo y la contraseña del formulario de inicio de sesión 
+        y se emite la señal login_requested con estos datos."""
         correo = self.login_card.user_input.text().strip()
         contrasena = self.login_card.pass_input.text()
         self.login_requested.emit(correo, contrasena)
 
     def _submit_register(self):
+        """Se obtiene el nombre, correo y la contraseña del formulario de registro
+        y se emite la señal register_requested con estos datos."""
         nombre = self.register_card.name_input.text().strip()
         correo = self.register_card.user_input.text().strip()
         contrasena = self.register_card.pass_input.text()
         self.register_requested.emit(nombre, correo, contrasena)
 
     def show_login(self):
+        """Se limpia el formulario de registro y se muestra el formulario de inicio de sesión."""
         self.register_card.clear_fields()
         self.forms_host.layout().setCurrentWidget(self.login_card)
 
     def show_register(self):
+        """Se limpia el formulario de inicio de sesión y se muestra el formulario de registro."""
         self.login_card.clear_fields()
         self.forms_host.layout().setCurrentWidget(self.register_card)
 
     def show_login_error(self, message):
+        """Se muestra un mensaje de error en el formulario de inicio de sesión."""
         self.login_card.show_error(message)
 
     def show_center_popup(self, message):
+        """Se muestra un popup centrado en la ventana con el mensaje proporcionado."""
         self.login_popup = AuthPopup(message, self)
         position = self.rect().center() - self.login_popup.rect().center()
         self.login_popup.move(self.mapToGlobal(position))
         self.login_popup.exec_()
 
     def show_register_error(self, message):
+        """Se muestra un mensaje de error en el formulario de registro."""
         self.register_card.show_error(message)
 
     def clear_fields(self):
+        """Se limpian los campos de ambos formularios y se ocultan los mensajes de error."""
         self.login_card.clear_fields()
         self.register_card.clear_fields()
 
     def mostrar(self):
+        """Se muestra la ventana de autenticación."""
         self.show()
