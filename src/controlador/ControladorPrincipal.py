@@ -35,6 +35,7 @@ class ControladorPrincipal:
     # ── Autenticación ─────────────────────────────────────────────────────────
 
     def comprobarLogin(self, correo, passw):
+        """Le pide al modelo que compruebe las credenciales de inicio de sesión y, si son válidas, abre la sesión correspondiente."""
         resultado = self._modelo.comprobarLoginValidado(correo, passw)
         self._sesion_actual = resultado if resultado is not None else None
         if resultado is not None:
@@ -42,6 +43,7 @@ class ControladorPrincipal:
         return resultado
 
     def registrar_cliente(self, nombre, correo, contrasena):
+        """Le pide al modelo que registre un nuevo cliente y, si es exitoso, abre la sesión correspondiente."""
         resultado = self._modelo.registrarClienteValidado(nombre, correo, contrasena)
         self._sesion_actual = resultado if resultado is not None else None
         if resultado is not None:
@@ -51,9 +53,11 @@ class ControladorPrincipal:
     # ── Estado de sesión ──────────────────────────────────────────────────────
 
     def get_sesion(self):
+        """Devuelve la sesión actual o None si no hay sesión iniciada."""
         return self._sesion_actual
 
     def set_sesion_actual(self, sesion):
+        """Establece la sesión actual"""
         self._sesion_actual = sesion
 
     def debe_mostrar_ver_carta(self):
@@ -70,15 +74,17 @@ class ControladorPrincipal:
     # ── Privados ──────────────────────────────────────────────────────────────
 
     def _abrir_sesion(self, sesion):
+        """Abre la sesión para el usuario autenticado y navega a la pantalla inicial según su rol."""
         self._sesion_actual = sesion
         self._vista.set_sesion_actual(sesion)
 
-        pantalla_inicial = sesion.rol.pantalla_inicial
+        pantalla_inicial = sesion.rol.pantalla_inicial #Coge la ventana inicial según el rol del usuario
 
+        #Dependiendo de la pantalla_inicial, se abre una ventana u otra y se establece la sesión en el controlador de cesta
         if pantalla_inicial in ("VENTANA_GERENTE", "VENTANA_ADMINISTRADOR", "VENTANA_COCINA"):
-            self._cesta.set_session(None)
+            self._cesta.set_session(None) #Si eres gerente, administrador o cocina, no se establece la sesión en el controlador de cesta
         else:
-            self._cesta.set_session(sesion)
+            self._cesta.set_session(sesion) #En caso contrario sí
 
         if pantalla_inicial == "VENTANA_GERENTE":
             self._vista.ir_gerente_dashboard()
