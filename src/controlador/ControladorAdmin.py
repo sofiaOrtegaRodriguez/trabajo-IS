@@ -41,7 +41,7 @@ class ControladorAdmin:
         dashboard = self._fabrica_dashboard(sesion)
         dashboard.productos_clicked.connect(self.ir_productos)
         dashboard.personal_clicked.connect(self.ir_personal)
-        dashboard.cerrar_sesion.connect(self._vista.mostrar_login)
+        dashboard.cerrar_sesion.connect(self._confirmar_cerrar_sesion)
         self._admin_dashboard_widget = dashboard
         self._vista.mostrar_widget(dashboard)
 
